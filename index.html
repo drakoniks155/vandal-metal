@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ru" data-mode="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VANDAL METAL — Рок-метал группа</title>
+    <meta name="description" content="Рок-метал группа VANDAL METAL. Сотрудничество, концерты, новый альбом.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+                   ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ (МЕТАЛ-СТИЛЬ)
+                   ============================================ */
+        :root {
+            --vandal-red: #cc0000;
+            --vandal-red-glow: rgba(204, 0, 0, 0.4);
+            --vandal-red-subtle: rgba(204, 0, 0, 0.12);
+            --vandal-dark: #0a0a0a;
+            --vandal-dark-surface: #141414;
+            --vandal-hairline: rgba(255, 255, 255, 0.06);
+            --vandal-subtle: #888888;
+            --vandal-muted: #555555;
+            --vandal-default: #eeeeee;
+            --vandal-font: 'Inter', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--vandal-font);
+            background: var(--vandal-dark);
+            color: var(--vandal-default);
+            overflow-x: hidden;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
+        img { display: block; max-width: 100%; }
+
+        /* ============================================
+                   СКРОЛЛБАР
+                   ============================================ */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--vandal-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--vandal-red); border-radius: 10px; }
+
+        /* ============================================
+                   ФОН: ЧАСТИЦЫ (АГРЕССИВНЫЕ)
+                   ============================================ */
+        #particles-canvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ============================================
+                   НАВИГАЦИЯ
+                   ============================================ */
+        .vandal-navbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(16px);
+            background: rgba(10, 10, 10, 0.85);
+            border-bottom: 1px solid var(--vandal-hairline);
+            padding: 14px 0;
+        }
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .vandal-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 900;
+            font-size: 1.4rem;
+            letter-spacing: -0.02em;
+            color: #fff;
+        }
+        .vandal-logo .logo-icon {
+            font-size: 1.8rem;
+            color: var(--vandal-red);
+            filter: drop-shadow(0 0 20px var(--vandal-red-glow));
+        }
+        .vandal-logo span {
+            background: linear-gradient(135deg, #fff 0%, var(--vandal-red) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .vandal-nav-menu {
+            display: none;
+            list-style: none;
+            gap: 32px;
+        }
+        @media (min-width: 768px) {
+            .vandal-nav-menu { display: flex; }
+        }
+        .vandal-nav-link {
+            color: var(--vandal-subtle);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s;
+            position: relative;
+            padding: 4px 0;
+        }
+        .vandal-nav-link:hover { color: #fff; }
+        .vandal-nav-link.active {
+            color: var(--vandal-red);
+        }
+        .vandal-nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--vandal-red);
+            border-radius: 2px;
+            box-shadow: 0 0 20px var(--vandal-red-glow);
+        }
+        .vandal-mobile-toggle {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+        @media (min-width: 768px) {
+            .vandal-mobile-toggle { display: none; }
+        }
+
+        /* ============================================
+                   МОБИЛЬНОЕ МЕНЮ
+                   ============================================ */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            padding: 20px 0;
+            background: rgba(10,10,10,0.96);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--vandal-hairline);
+        }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu a {
+            color: var(--vandal-subtle);
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 6px 0;
+            transition: color 0.3s;
+        }
+        .mobile-menu a:hover { color: #fff; }
+        .mobile-menu a.active { color: var(--vandal-red); }
+        @media (min-width: 768px) {
+            .mobile-menu { display: none !important; }
+        }
+
+        /* ============================================
+                   ГЕРО-СЕКЦИЯ
+                   ============================================ */
+        .hero-section {
+            padding: 100px 0 80px;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        @media (min-width: 992px) {
+            .hero-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        .hero-content .hero-badge {
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 40px;
+            background: var(--vandal-red-subtle);
+            color: var(--vandal-red);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 20px;
+            border: 1px solid rgba(204, 0, 0, 0.2);
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+        }
+        .hero-content h1 .highlight {
+            background: linear-gradient(135deg, var(--vandal-red), #ff3333);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 60px var(--vandal-red-glow);
+        }
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.8rem; }
+        }
+
+        .hero-content p {
+            color: var(--vandal-subtle);
+            font-size: 1.15rem;
+            max-width: 480px;
+            margin-bottom: 32px;
+            line-height: 1.8;
+        }
+
+        .hero-image-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--vandal-hairline);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            background: var(--vandal-dark-surface);
+            aspect-ratio: 4/3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            color: var(--vandal-red);
+            filter: drop-shadow(0 0 40px var(--vandal-red-glow));
+        }
+        .hero-image-card .placeholder-text {
+            text-align: center;
+            font-size: 1rem;
+            color: var(--vandal-subtle);
+        }
+        .hero-image-card .placeholder-text .big {
+            font-size: 5rem;
+            display: block;
+            color: var(--vandal-red);
+        }
+
+        /* ============================================
+                   КНОПКИ (МЕТАЛ-СТИЛЬ)
+                   ============================================ */
+        .vandal-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 36px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: none;
+            cursor: pointer;
+        }
+        .vandal-btn-primary {
+            background: var(--vandal-red);
+            color: #fff;
+            box-shadow: 0 0 40px var(--vandal-red-glow);
+        }
+        .vandal-btn-primary:hover {
+            transform: scale(1.06);
+            box-shadow: 0 0 80px var(--vandal-red-glow);
+            background: #ff1a1a;
+        }
+        .vandal-btn-secondary {
+            background: rgba(255,255,255,0.06);
+            color: #fff;
+            border: 1px solid var(--vandal-hairline);
+        }
+        .vandal-btn-secondary:hover {
+            background: rgba(255,255,255,0.12);
+            transform: scale(1.06);
+        }
+
+        /* ============================================
+                   СЕКЦИЯ "О ГРУППЕ"
+                   ============================================ */
+        .about-section {
+            padding: 80px 0;
+            border-top: 1px solid var(--vandal-hairline);
+            border-bottom: 1px solid var(--vandal-hairline);
+            background: var(--vandal-dark-surface);
+        }
+        .section-label {
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 40px;
+            background: var(--vandal-red-subtle);
+            color: var(--vandal-red);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+        .section-title {
+            font-size: 2.6rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            margin-top: 4px;
+        }
+        .section-title .accent {
+            color: var(--vandal-red);
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-top: 40px;
+        }
+        @media (min-width: 992px) {
+            .about-grid { grid-template-columns: 1fr 1fr; }
+        }
+        .about-text p {
+            color: var(--vandal-subtle);
+            font-size: 1.05rem;
+            line-height: 1.9;
+            margin-bottom: 16px;
+        }
+        .about-image {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--vandal-hairline);
+            background: var(--vandal-dark);
+            aspect-ratio: 4/3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--vandal-red);
+            filter: drop-shadow(0 0 30px var(--vandal-red-glow));
+        }
+
+        /* ============================================
+                   КОНТАКТЫ
+                   ============================================ */
+        .contact-section {
+            padding: 80px 0;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            max-width: 700px;
+            margin: 40px auto 0;
+        }
+        @media (min-width: 768px) {
+            .contact-grid { grid-template-columns: 1fr 1fr; }
+        }
+        .contact-card {
+            background: var(--vandal-dark-surface);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--vandal-hairline);
+            border-radius: 16px;
+            padding: 28px 24px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .contact-card:hover {
+            border-color: var(--vandal-red);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(204,0,0,0.05);
+        }
+        .contact-card .icon {
+            font-size: 2.4rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .contact-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .contact-card a {
+            color: var(--vandal-red);
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .contact-card a:hover {
+            text-shadow: 0 0 30px var(--vandal-red-glow);
+        }
+        .contact-card .sub {
+            color: var(--vandal-muted);
+            font-size: 0.8rem;
+            margin-top: 4px;
+        }
+
+        /* ============================================
+                   ФУТЕР
+                   ============================================ */
+        .vandal-footer {
+            padding: 48px 0 24px;
+            border-top: 1px solid var(--vandal-hairline);
+            background: var(--vandal-dark);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+        @media (min-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr 1fr 1fr; }
+        }
+        .footer-heading {
+            color: #fff;
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 6px; }
+        .footer-links a {
+            color: var(--vandal-subtle);
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover { color: var(--vandal-red); }
+        .footer-bottom {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid var(--vandal-hairline);
+            text-align: center;
+            color: var(--vandal-muted);
+            font-size: 0.85rem;
+        }
+
+        /* ============================================
+                   АДАПТИВ
+                   ============================================ */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.8rem; }
+            .section-title { font-size: 2rem; }
+            .hero-image-card { aspect-ratio: 4/3; }
+            .about-image { aspect-ratio: 4/3; }
+        }
+        @media (max-width: 480px) {
+            .hero-content h1 { font-size: 2.2rem; }
+            .hero-section { padding: 80px 0 40px; }
+            .vandal-btn { padding: 12px 24px; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== ФОН: ЧАСТИЦЫ ===== -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- ===== НАВИГАЦИЯ ===== -->
+    <nav class="vandal-navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="vandal-logo">
+                <span class="logo-icon">⚡</span>
+                <span>VANDAL METAL</span>
+            </a>
+            <ul class="vandal-nav-menu">
+                <li><a href="index.html" class="vandal-nav-link active">Главная</a></li>
+                <li><a href="#about" class="vandal-nav-link">О группе</a></li>
+                <li><a href="#contact" class="vandal-nav-link">Контакты</a></li>
+            </ul>
+            <button class="vandal-mobile-toggle" id="mobileToggle" aria-label="Меню">☰</button>
+        </div>
+    </nav>
+
+    <!-- ===== МОБИЛЬНОЕ МЕНЮ ===== -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="container" style="display:flex; flex-direction:column; gap:12px;">
+            <a href="index.html" class="active">Главная</a>
+            <a href="#about">О группе</a>
+            <a href="#contact">Контакты</a>
+        </div>
+    </div>
+
+    <!-- ===== ГЕРО ===== -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <span class="hero-badge">🔥 Новый альбом скоро</span>
+                    <h1>
+                        <span class="highlight">VANDAL</span><br>
+                        METAL
+                    </h1>
+                    <p>
+                        Рок-метал группа из России. Тяжёлый звук, агрессивная энергия и тексты, которые бьют в цель. Мы ищем сотрудничество и новые концертные площадки.
+                    </p>
+                    <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+                        <a href="#contact" class="vandal-btn vandal-btn-primary">Связаться →</a>
+                        <a href="#about" class="vandal-btn vandal-btn-secondary">Подробнее</a>
+                    </div>
+                </div>
+                <div class="hero-image-card">
+                    <div class="placeholder-text">
+                        <span class="big">⚡</span>
+                        VANDAL<br>METAL
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== О ГРУППЕ ===== -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <span class="section-label">О группе</span>
+                <h2 class="section-title">
+                    Кто мы такие?
+                </h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>
+                        <strong>VANDAL METAL</strong> — это рок-метал группа, созданная для тех, кто живёт энергией тяжёлой музыки. Наш звук — это смесь агрессивных риффов, мощных ударных и глубоких текстов.
+                    </p>
+                    <p>
+                        Мы играем в стилях <strong>метал, хард-рок и альтернативу</strong>. Наши тексты — о борьбе, свободе, внутренней силе и вызове системе.
+                    </p>
+                    <p>
+                        Мы открыты к <strong>сотрудничеству</strong>: концерты, фестивали, совместные проекты. Если ты разделяешь нашу энергию — пиши!
+                    </p>
+                </div>
+                <div class="about-image">
+                    <span>🤘</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== КОНТАКТЫ ===== -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <span class="section-label">Связь</span>
+                <h2 class="section-title">
+                    <span class="accent">Связаться</span> с нами
+                </h2>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <span class="icon">✉️</span>
+                    <h3>Email</h3>
+                    <a href="mailto:vandalmusical@mail.ru">vandalmusical@mail.ru</a>
+                    <div class="sub">Для сотрудничества</div>
+                </div>
+                <div class="contact-card">
+                    <span class="icon">💬</span>
+                    <h3>Telegram</h3>
+                    <a href="https://t.me/VANDALMETAL" target="_blank">@VANDALMETAL</a>
+                    <div class="sub">Быстрая связь</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ФУТЕР ===== -->
+    <footer class="vandal-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="index.html" class="vandal-logo">
+                        <span class="logo-icon">⚡</span>
+                        <span>VANDAL METAL</span>
+                    </a>
+                    <p style="color: var(--vandal-subtle); margin-top: 4px;">Рок-метал группа</p>
+                </div>
+                <div>
+                    <h4 class="footer-heading">Навигация</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="#about">О группе</a></li>
+                        <li><a href="#contact">Контакты</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-heading">Контакты</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:vandalmusical@mail.ru">vandalmusical@mail.ru</a></li>
+                        <li><a href="https://t.me/VANDALMETAL" target="_blank">@VANDALMETAL</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 VANDAL METAL. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================
+    СКРИПТЫ
+    ============================================ -->
+
+    <!-- 1. ЧАСТИЦЫ -->
+    <script>
+        (function() {
+            const canvas = document.getElementById('particles-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let w, h;
+            const particles = [];
+            const COUNT = 80;
+
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            class Particle {
+                constructor() { this.reset(); }
+                reset() {
+                    this.x = Math.random() * w;
+                    this.y = Math.random() * h;
+                    this.size = Math.random() * 2.5 + 0.5;
+                    this.speedX = (Math.random() - 0.5) * 0.5;
+                    this.speedY = (Math.random() - 0.5) * 0.5;
+                    this.opacity = Math.random() * 0.4 + 0.15;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    if (this.x < 0 || this.x > w) this.speedX *= -1;
+                    if (this.y < 0 || this.y > h) this.speedY *= -1;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(204, 0, 0, ${this.opacity})`;
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < COUNT; i++) particles.push(new Particle());
+
+            let mouseX = null, mouseY = null;
+            canvas.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+            canvas.addEventListener('mouseleave', () => {
+                mouseX = null;
+                mouseY = null;
+            });
+
+            function animate() {
+                ctx.clearRect(0, 0, w, h);
+                particles.forEach(p => {
+                    if (mouseX !== null && mouseY !== null) {
+                        const dx = p.x - mouseX;
+                        const dy = p.y - mouseY;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 150) {
+                            const force = (150 - dist) / 150 * 0.02;
+                            p.x += dx * force;
+                            p.y += dy * force;
+                        }
+                    }
+                    p.update();
+                    p.draw();
+                });
+
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 120) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(204, 0, 0, ${0.06 * (1 - dist/120)})`;
+                            ctx.lineWidth = 0.6;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animate);
+            }
+            animate();
+        })();
+    </script>
+
+    <!-- 2. МОБИЛЬНОЕ МЕНЮ -->
+    <script>
+        document.getElementById('mobileToggle')?.addEventListener('click', function() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('open');
+        });
+    </script>
+
+</body>
+  </html>
