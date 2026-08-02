@@ -10,11 +10,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         /* ============================================
-                   ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ (МЕТАЛ-СТИЛЬ)
+                   ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
                    ============================================ */
         :root {
             --vandal-red: #cc0000;
-            --vandal-red-glow: rgba(204, 0, 0, 0.4);
+            --vandal-red-glow: rgba(204, 0, 0, 0.5);
             --vandal-red-subtle: rgba(204, 0, 0, 0.12);
             --vandal-dark: #0a0a0a;
             --vandal-dark-surface: #141414;
@@ -22,12 +22,11 @@
             --vandal-subtle: #888888;
             --vandal-muted: #555555;
             --vandal-default: #eeeeee;
-            --vandal-font: 'Inter', sans-serif;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
-            font-family: var(--vandal-font);
+            font-family: 'Inter', sans-serif;
             background: var(--vandal-dark);
             color: var(--vandal-default);
             overflow-x: hidden;
@@ -46,7 +45,7 @@
         ::-webkit-scrollbar-thumb { background: var(--vandal-red); border-radius: 10px; }
 
         /* ============================================
-                   ФОН: ЧАСТИЦЫ (АГРЕССИВНЫЕ)
+                   ФОН: АГРЕССИВНЫЕ ЧАСТИЦЫ
                    ============================================ */
         #particles-canvas {
             position: fixed;
@@ -62,10 +61,11 @@
             position: sticky;
             top: 0;
             z-index: 50;
-            backdrop-filter: blur(16px);
-            background: rgba(10, 10, 10, 0.85);
-            border-bottom: 1px solid var(--vandal-hairline);
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.8);
+            border-bottom: 2px solid var(--vandal-red);
             padding: 14px 0;
+            box-shadow: 0 0 40px rgba(204, 0, 0, 0.1);
         }
         .nav-container {
             display: flex;
@@ -84,7 +84,12 @@
         .vandal-logo .logo-icon {
             font-size: 1.8rem;
             color: var(--vandal-red);
-            filter: drop-shadow(0 0 20px var(--vandal-red-glow));
+            filter: drop-shadow(0 0 30px var(--vandal-red-glow));
+            animation: logoPulse 2s ease-in-out infinite;
+        }
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px var(--vandal-red-glow)); }
+            50% { transform: scale(1.15); filter: drop-shadow(0 0 60px var(--vandal-red-glow)); }
         }
         .vandal-logo span {
             background: linear-gradient(135deg, #fff 0%, var(--vandal-red) 100%);
@@ -103,9 +108,9 @@
         .vandal-nav-link {
             color: var(--vandal-subtle);
             font-size: 0.9rem;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.08em;
             transition: all 0.3s;
             position: relative;
             padding: 4px 0;
@@ -123,7 +128,12 @@
             height: 2px;
             background: var(--vandal-red);
             border-radius: 2px;
-            box-shadow: 0 0 20px var(--vandal-red-glow);
+            box-shadow: 0 0 30px var(--vandal-red-glow);
+            animation: lineGlow 1.5s ease-in-out infinite;
+        }
+        @keyframes lineGlow {
+            0%, 100% { box-shadow: 0 0 20px var(--vandal-red-glow); }
+            50% { box-shadow: 0 0 60px var(--vandal-red-glow); }
         }
         .vandal-mobile-toggle {
             background: none;
@@ -147,15 +157,15 @@
             padding: 20px 0;
             background: rgba(10,10,10,0.96);
             backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--vandal-hairline);
+            border-bottom: 2px solid var(--vandal-red);
         }
         .mobile-menu.open { display: flex; }
         .mobile-menu a {
             color: var(--vandal-subtle);
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.08em;
             padding: 6px 0;
             transition: color 0.3s;
         }
@@ -166,15 +176,29 @@
         }
 
         /* ============================================
-                   ГЕРО-СЕКЦИЯ
+                   ГЕРО-СЕКЦИЯ (С АНИМАЦИЕЙ)
                    ============================================ */
         .hero-section {
-            padding: 100px 0 80px;
+            padding: 120px 0 80px;
             position: relative;
             min-height: 100vh;
             display: flex;
             align-items: center;
+            overflow: hidden;
         }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 50%, rgba(204,0,0,0.08) 0%, transparent 60%);
+            pointer-events: none;
+            animation: bgPulse 4s ease-in-out infinite;
+        }
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
         .hero-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -185,9 +209,17 @@
             .hero-grid { grid-template-columns: 1fr 1fr; }
         }
 
+        .hero-content {
+            animation: heroFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes heroFade {
+            0% { opacity: 0; transform: translateY(40px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
         .hero-content .hero-badge {
             display: inline-block;
-            padding: 6px 18px;
+            padding: 8px 20px;
             border-radius: 40px;
             background: var(--vandal-red-subtle);
             color: var(--vandal-red);
@@ -196,25 +228,52 @@
             text-transform: uppercase;
             letter-spacing: 0.1em;
             margin-bottom: 20px;
-            border: 1px solid rgba(204, 0, 0, 0.2);
+            border: 1px solid rgba(204, 0, 0, 0.3);
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+        @keyframes badgePulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(204, 0, 0, 0.1); }
+            50% { box-shadow: 0 0 40px rgba(204, 0, 0, 0.3); }
         }
 
         .hero-content h1 {
-            font-size: 4.5rem;
+            font-size: 5rem;
             font-weight: 900;
             line-height: 1.05;
             letter-spacing: -0.03em;
             margin-bottom: 20px;
         }
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 3.2rem; }
+        }
+        @media (max-width: 480px) {
+            .hero-content h1 { font-size: 2.5rem; }
+        }
+
         .hero-content h1 .highlight {
-            background: linear-gradient(135deg, var(--vandal-red), #ff3333);
+            background: linear-gradient(135deg, var(--vandal-red), #ff3333, var(--vandal-red));
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 0 60px var(--vandal-red-glow);
+            animation: gradientMove 3s ease-in-out infinite;
         }
-        @media (max-width: 768px) {
-            .hero-content h1 { font-size: 2.8rem; }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--vandal-subtle);
+            margin-bottom: 8px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .hero-content .subtitle .accent {
+            color: var(--vandal-red);
         }
 
         .hero-content p {
@@ -222,37 +281,52 @@
             font-size: 1.15rem;
             max-width: 480px;
             margin-bottom: 32px;
-            line-height: 1.8;
+            line-height: 1.9;
         }
 
         .hero-image-card {
             position: relative;
             border-radius: 20px;
             overflow: hidden;
-            border: 1px solid var(--vandal-hairline);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            border: 2px solid var(--vandal-red);
+            box-shadow: 0 0 60px rgba(204, 0, 0, 0.15), inset 0 0 60px rgba(204, 0, 0, 0.05);
             background: var(--vandal-dark-surface);
             aspect-ratio: 4/3;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 6rem;
-            color: var(--vandal-red);
-            filter: drop-shadow(0 0 40px var(--vandal-red-glow));
+            animation: heroCardFloat 6s ease-in-out infinite;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+        .hero-image-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 100px rgba(204, 0, 0, 0.25);
+        }
+        @keyframes heroCardFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
         .hero-image-card .placeholder-text {
             text-align: center;
-            font-size: 1rem;
+            font-size: 1.2rem;
             color: var(--vandal-subtle);
+            padding: 20px;
         }
         .hero-image-card .placeholder-text .big {
-            font-size: 5rem;
+            font-size: 6rem;
             display: block;
             color: var(--vandal-red);
+            filter: drop-shadow(0 0 60px var(--vandal-red-glow));
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0) rotate(-4deg) scale(1); }
+            50% { transform: translateY(-16px) rotate(4deg) scale(1.1); }
         }
 
         /* ============================================
-                   КНОПКИ (МЕТАЛ-СТИЛЬ)
+                   КНОПКИ
                    ============================================ */
         .vandal-btn {
             display: inline-flex;
@@ -267,25 +341,46 @@
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             border: none;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
+        .vandal-btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .vandal-btn:hover::after {
+            opacity: 1;
+        }
+
         .vandal-btn-primary {
             background: var(--vandal-red);
             color: #fff;
             box-shadow: 0 0 40px var(--vandal-red-glow);
+            animation: btnPulse 2.5s ease-in-out infinite;
+        }
+        @keyframes btnPulse {
+            0%, 100% { box-shadow: 0 0 30px var(--vandal-red-glow); }
+            50% { box-shadow: 0 0 80px var(--vandal-red-glow); }
         }
         .vandal-btn-primary:hover {
-            transform: scale(1.06);
-            box-shadow: 0 0 80px var(--vandal-red-glow);
+            transform: scale(1.08);
+            box-shadow: 0 0 100px var(--vandal-red-glow);
             background: #ff1a1a;
         }
+
         .vandal-btn-secondary {
             background: rgba(255,255,255,0.06);
             color: #fff;
-            border: 1px solid var(--vandal-hairline);
+            border: 2px solid var(--vandal-hairline);
         }
         .vandal-btn-secondary:hover {
             background: rgba(255,255,255,0.12);
-            transform: scale(1.06);
+            transform: scale(1.08);
+            border-color: var(--vandal-red);
         }
 
         /* ============================================
@@ -293,10 +388,19 @@
                    ============================================ */
         .about-section {
             padding: 80px 0;
-            border-top: 1px solid var(--vandal-hairline);
-            border-bottom: 1px solid var(--vandal-hairline);
+            border-top: 2px solid var(--vandal-red);
+            border-bottom: 2px solid var(--vandal-red);
             background: var(--vandal-dark-surface);
+            position: relative;
         }
+        .about-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 70% 50%, rgba(204,0,0,0.05) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
         .section-label {
             display: inline-block;
             padding: 4px 16px;
@@ -310,7 +414,7 @@
             margin-bottom: 8px;
         }
         .section-title {
-            font-size: 2.6rem;
+            font-size: 2.8rem;
             font-weight: 900;
             letter-spacing: -0.02em;
             margin-top: 4px;
@@ -318,6 +422,7 @@
         .section-title .accent {
             color: var(--vandal-red);
         }
+
         .about-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -328,24 +433,45 @@
         @media (min-width: 992px) {
             .about-grid { grid-template-columns: 1fr 1fr; }
         }
+
+        .about-text {
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: slideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes slideInLeft {
+            to { opacity: 1; transform: translateX(0); }
+        }
         .about-text p {
             color: var(--vandal-subtle);
             font-size: 1.05rem;
             line-height: 1.9;
             margin-bottom: 16px;
         }
+
         .about-image {
             border-radius: 16px;
             overflow: hidden;
-            border: 1px solid var(--vandal-hairline);
+            border: 2px solid var(--vandal-red);
             background: var(--vandal-dark);
             aspect-ratio: 4/3;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
+            font-size: 5rem;
             color: var(--vandal-red);
-            filter: drop-shadow(0 0 30px var(--vandal-red-glow));
+            filter: drop-shadow(0 0 40px var(--vandal-red-glow));
+            opacity: 0;
+            transform: translateX(30px);
+            animation: slideInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes slideInRight {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .about-image:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 80px rgba(204, 0, 0, 0.15);
         }
 
         /* ============================================
@@ -353,7 +479,9 @@
                    ============================================ */
         .contact-section {
             padding: 80px 0;
+            position: relative;
         }
+
         .contact-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -364,38 +492,56 @@
         @media (min-width: 768px) {
             .contact-grid { grid-template-columns: 1fr 1fr; }
         }
+
         .contact-card {
             background: var(--vandal-dark-surface);
             backdrop-filter: blur(12px);
-            border: 1px solid var(--vandal-hairline);
+            border: 2px solid var(--vandal-hairline);
             border-radius: 16px;
-            padding: 28px 24px;
+            padding: 32px 24px;
             text-align: center;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: cardAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
+        .contact-card:nth-child(1) { animation-delay: 0.1s; }
+        .contact-card:nth-child(2) { animation-delay: 0.25s; }
+
+        @keyframes cardAppear {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .contact-card:hover {
             border-color: var(--vandal-red);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 40px rgba(204,0,0,0.05);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(204,0,0,0.08);
         }
         .contact-card .icon {
-            font-size: 2.4rem;
+            font-size: 2.8rem;
             margin-bottom: 8px;
             display: block;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .contact-card:hover .icon {
+            transform: scale(1.15) rotate(-6deg);
         }
         .contact-card h3 {
             font-size: 1rem;
             font-weight: 700;
             color: #fff;
             margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
         .contact-card a {
             color: var(--vandal-red);
-            font-weight: 600;
+            font-weight: 700;
             transition: all 0.3s;
+            font-size: 1.05rem;
         }
         .contact-card a:hover {
-            text-shadow: 0 0 30px var(--vandal-red-glow);
+            text-shadow: 0 0 40px var(--vandal-red-glow);
         }
         .contact-card .sub {
             color: var(--vandal-muted);
@@ -408,7 +554,7 @@
                    ============================================ */
         .vandal-footer {
             padding: 48px 0 24px;
-            border-top: 1px solid var(--vandal-hairline);
+            border-top: 2px solid var(--vandal-red);
             background: var(--vandal-dark);
         }
         .footer-grid {
@@ -448,15 +594,17 @@
                    АДАПТИВ
                    ============================================ */
         @media (max-width: 768px) {
-            .hero-content h1 { font-size: 2.8rem; }
-            .section-title { font-size: 2rem; }
+            .hero-content h1 { font-size: 3rem; }
+            .section-title { font-size: 2.2rem; }
             .hero-image-card { aspect-ratio: 4/3; }
             .about-image { aspect-ratio: 4/3; }
+            .hero-content .subtitle { font-size: 1.2rem; }
         }
         @media (max-width: 480px) {
             .hero-content h1 { font-size: 2.2rem; }
-            .hero-section { padding: 80px 0 40px; }
+            .hero-section { padding: 100px 0 40px; }
             .vandal-btn { padding: 12px 24px; font-size: 0.8rem; }
+            .hero-content .subtitle { font-size: 1rem; }
         }
     </style>
 </head>
@@ -496,6 +644,7 @@
             <div class="hero-grid">
                 <div class="hero-content">
                     <span class="hero-badge">🔥 Новый альбом скоро</span>
+                    <div class="subtitle">Мы — <span class="accent">метал</span></div>
                     <h1>
                         <span class="highlight">VANDAL</span><br>
                         METAL
@@ -524,19 +673,19 @@
             <div style="text-align: center; margin-bottom: 20px;">
                 <span class="section-label">О группе</span>
                 <h2 class="section-title">
-                    Кто мы такие?
+                    Кто мы <span class="accent">такие</span>?
                 </h2>
             </div>
             <div class="about-grid">
                 <div class="about-text">
                     <p>
-                        <strong>VANDAL METAL</strong> — это рок-метал группа, созданная для тех, кто живёт энергией тяжёлой музыки. Наш звук — это смесь агрессивных риффов, мощных ударных и глубоких текстов.
+                        <strong style="color: var(--vandal-red);">VANDAL METAL</strong> — это рок-метал группа, созданная для тех, кто живёт энергией тяжёлой музыки. Наш звук — это смесь агрессивных риффов, мощных ударных и глубоких текстов.
                     </p>
                     <p>
-                        Мы играем в стилях <strong>метал, хард-рок и альтернативу</strong>. Наши тексты — о борьбе, свободе, внутренней силе и вызове системе.
+                        Мы играем в стилях <strong style="color: var(--vandal-red);">метал, хард-рок и альтернативу</strong>. Наши тексты — о борьбе, свободе, внутренней силе и вызове системе.
                     </p>
                     <p>
-                        Мы открыты к <strong>сотрудничеству</strong>: концерты, фестивали, совместные проекты. Если ты разделяешь нашу энергию — пиши!
+                        Мы открыты к <strong style="color: var(--vandal-red);">сотрудничеству</strong>: концерты, фестивали, совместные проекты. Если ты разделяешь нашу энергию — пиши!
                     </p>
                 </div>
                 <div class="about-image">
@@ -609,7 +758,7 @@
     СКРИПТЫ
     ============================================ -->
 
-    <!-- 1. ЧАСТИЦЫ -->
+    <!-- 1. АГРЕССИВНЫЕ ЧАСТИЦЫ -->
     <script>
         (function() {
             const canvas = document.getElementById('particles-canvas');
@@ -617,7 +766,7 @@
             const ctx = canvas.getContext('2d');
             let w, h;
             const particles = [];
-            const COUNT = 80;
+            const COUNT = 100;
 
             function resize() {
                 w = canvas.width = window.innerWidth;
@@ -631,16 +780,18 @@
                 reset() {
                     this.x = Math.random() * w;
                     this.y = Math.random() * h;
-                    this.size = Math.random() * 2.5 + 0.5;
-                    this.speedX = (Math.random() - 0.5) * 0.5;
-                    this.speedY = (Math.random() - 0.5) * 0.5;
-                    this.opacity = Math.random() * 0.4 + 0.15;
+                    this.size = Math.random() * 3 + 0.5;
+                    this.speedX = (Math.random() - 0.5) * 0.6;
+                    this.speedY = (Math.random() - 0.5) * 0.6;
+                    this.opacity = Math.random() * 0.5 + 0.15;
+                    this.targetSize = this.size * (Math.random() * 2 + 0.5);
                 }
                 update() {
                     this.x += this.speedX;
                     this.y += this.speedY;
                     if (this.x < 0 || this.x > w) this.speedX *= -1;
                     if (this.y < 0 || this.y > h) this.speedY *= -1;
+                    this.size += (this.targetSize - this.size) * 0.005;
                 }
                 draw() {
                     ctx.beginPath();
@@ -669,8 +820,8 @@
                         const dx = p.x - mouseX;
                         const dy = p.y - mouseY;
                         const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 150) {
-                            const force = (150 - dist) / 150 * 0.02;
+                        if (dist < 180) {
+                            const force = (180 - dist) / 180 * 0.04;
                             p.x += dx * force;
                             p.y += dy * force;
                         }
@@ -684,12 +835,12 @@
                         const dx = particles[i].x - particles[j].x;
                         const dy = particles[i].y - particles[j].y;
                         const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 120) {
+                        if (dist < 140) {
                             ctx.beginPath();
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.strokeStyle = `rgba(204, 0, 0, ${0.06 * (1 - dist/120)})`;
-                            ctx.lineWidth = 0.6;
+                            ctx.strokeStyle = `rgba(204, 0, 0, ${0.08 * (1 - dist/140)})`;
+                            ctx.lineWidth = 1;
                             ctx.stroke();
                         }
                     }
@@ -709,4 +860,4 @@
     </script>
 
 </body>
-  </html>
+</html>
