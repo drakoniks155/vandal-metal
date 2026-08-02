@@ -14,7 +14,7 @@
                    ============================================ */
         :root {
             --vandal-red: #cc0000;
-            --vandal-red-glow: rgba(204, 0, 0, 0.5);
+            --vandal-red-glow: rgba(204, 0, 0, 0.4);
             --vandal-red-subtle: rgba(204, 0, 0, 0.12);
             --vandal-dark: #0a0a0a;
             --vandal-dark-surface: #141414;
@@ -45,7 +45,7 @@
         ::-webkit-scrollbar-thumb { background: var(--vandal-red); border-radius: 10px; }
 
         /* ============================================
-                   ФОН: АГРЕССИВНЫЕ ЧАСТИЦЫ
+                   ФОН: ЧАСТИЦЫ (АГРЕССИВНЫЕ)
                    ============================================ */
         #particles-canvas {
             position: fixed;
@@ -57,22 +57,27 @@
         /* ============================================
                    НАВИГАЦИЯ
                    ============================================ */
-        .vandal-navbar {
+        .navbar {
             position: sticky;
             top: 0;
             z-index: 50;
-            backdrop-filter: blur(20px);
-            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(16px);
+            background: rgba(10, 10, 10, 0.85);
             border-bottom: 2px solid var(--vandal-red);
             padding: 14px 0;
             box-shadow: 0 0 40px rgba(204, 0, 0, 0.1);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .navbar.scrolled {
+            background: rgba(10, 10, 10, 0.95);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
         }
         .nav-container {
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
-        .vandal-logo {
+        .logo {
             display: flex;
             align-items: center;
             gap: 12px;
@@ -80,8 +85,9 @@
             font-size: 1.4rem;
             letter-spacing: -0.02em;
             color: #fff;
+            text-decoration: none;
         }
-        .vandal-logo .logo-icon {
+        .logo .icon {
             font-size: 1.8rem;
             color: var(--vandal-red);
             filter: drop-shadow(0 0 30px var(--vandal-red-glow));
@@ -91,35 +97,43 @@
             0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px var(--vandal-red-glow)); }
             50% { transform: scale(1.15); filter: drop-shadow(0 0 60px var(--vandal-red-glow)); }
         }
-        .vandal-logo span {
+        .logo .brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        .logo .brand-text .name {
             background: linear-gradient(135deg, #fff 0%, var(--vandal-red) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .vandal-nav-menu {
+        .logo .brand-text .sub {
+            font-size: 0.6rem;
+            color: var(--vandal-subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .nav-menu {
             display: none;
             list-style: none;
             gap: 32px;
         }
-        @media (min-width: 768px) {
-            .vandal-nav-menu { display: flex; }
-        }
-        .vandal-nav-link {
+        @media(min-width:768px) { .nav-menu { display: flex; } }
+        .nav-link {
             color: var(--vandal-subtle);
             font-size: 0.9rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.08em;
             transition: all 0.3s;
-            position: relative;
             padding: 4px 0;
+            position: relative;
         }
-        .vandal-nav-link:hover { color: #fff; }
-        .vandal-nav-link.active {
-            color: var(--vandal-red);
-        }
-        .vandal-nav-link.active::after {
+        .nav-link:hover { color: #fff; }
+        .nav-link.active { color: var(--vandal-red); }
+        .nav-link.active::after {
             content: '';
             position: absolute;
             bottom: -4px;
@@ -135,7 +149,7 @@
             0%, 100% { box-shadow: 0 0 20px var(--vandal-red-glow); }
             50% { box-shadow: 0 0 60px var(--vandal-red-glow); }
         }
-        .vandal-mobile-toggle {
+        .mobile-toggle {
             background: none;
             border: none;
             color: #fff;
@@ -143,13 +157,8 @@
             cursor: pointer;
             padding: 4px 8px;
         }
-        @media (min-width: 768px) {
-            .vandal-mobile-toggle { display: none; }
-        }
+        @media(min-width:768px) { .mobile-toggle { display: none; } }
 
-        /* ============================================
-                   МОБИЛЬНОЕ МЕНЮ
-                   ============================================ */
         .mobile-menu {
             display: none;
             flex-direction: column;
@@ -167,18 +176,15 @@
             text-transform: uppercase;
             letter-spacing: 0.08em;
             padding: 6px 0;
-            transition: color 0.3s;
         }
         .mobile-menu a:hover { color: #fff; }
         .mobile-menu a.active { color: var(--vandal-red); }
-        @media (min-width: 768px) {
-            .mobile-menu { display: none !important; }
-        }
+        @media(min-width:768px) { .mobile-menu { display: none !important; } }
 
         /* ============================================
-                   ГЕРО-СЕКЦИЯ (С АНИМАЦИЕЙ)
+                   ГЕРО-СЕКЦИЯ
                    ============================================ */
-        .hero-section {
+        .hero {
             padding: 120px 0 80px;
             position: relative;
             min-height: 100vh;
@@ -186,7 +192,7 @@
             align-items: center;
             overflow: hidden;
         }
-        .hero-section::before {
+        .hero::before {
             content: '';
             position: absolute;
             inset: 0;
@@ -205,19 +211,18 @@
             gap: 50px;
             align-items: center;
         }
-        @media (min-width: 992px) {
-            .hero-grid { grid-template-columns: 1fr 1fr; }
-        }
+        @media(min-width:992px) { .hero-grid { grid-template-columns: 1fr 1fr; } }
 
         .hero-content {
             animation: heroFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
         }
         @keyframes heroFade {
             0% { opacity: 0; transform: translateY(40px) scale(0.96); }
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        .hero-content .hero-badge {
+        .hero-content .badge {
             display: inline-block;
             padding: 8px 20px;
             border-radius: 40px;
@@ -236,6 +241,18 @@
             50% { box-shadow: 0 0 40px rgba(204, 0, 0, 0.3); }
         }
 
+        .hero-content .subtitle {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--vandal-subtle);
+            margin-bottom: 8px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .hero-content .subtitle .accent {
+            color: var(--vandal-red);
+        }
+
         .hero-content h1 {
             font-size: 5rem;
             font-weight: 900;
@@ -243,12 +260,8 @@
             letter-spacing: -0.03em;
             margin-bottom: 20px;
         }
-        @media (max-width: 768px) {
-            .hero-content h1 { font-size: 3.2rem; }
-        }
-        @media (max-width: 480px) {
-            .hero-content h1 { font-size: 2.5rem; }
-        }
+        @media(max-width:768px) { .hero-content h1 { font-size: 3.2rem; } }
+        @media(max-width:480px) { .hero-content h1 { font-size: 2.5rem; } }
 
         .hero-content h1 .highlight {
             background: linear-gradient(135deg, var(--vandal-red), #ff3333, var(--vandal-red));
@@ -264,18 +277,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        .hero-content .subtitle {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--vandal-subtle);
-            margin-bottom: 8px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-        .hero-content .subtitle .accent {
-            color: var(--vandal-red);
-        }
-
         .hero-content p {
             color: var(--vandal-subtle);
             font-size: 1.15rem;
@@ -284,7 +285,7 @@
             line-height: 1.9;
         }
 
-        .hero-image-card {
+        .hero-image {
             position: relative;
             border-radius: 20px;
             overflow: hidden;
@@ -295,25 +296,25 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: heroCardFloat 6s ease-in-out infinite;
+            animation: heroFloat 6s ease-in-out infinite;
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .hero-image-card:hover {
+        .hero-image:hover {
             transform: scale(1.02);
             box-shadow: 0 0 100px rgba(204, 0, 0, 0.25);
         }
-        @keyframes heroCardFloat {
+        @keyframes heroFloat {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-12px); }
         }
 
-        .hero-image-card .placeholder-text {
+        .hero-image .placeholder {
             text-align: center;
             font-size: 1.2rem;
             color: var(--vandal-subtle);
             padding: 20px;
         }
-        .hero-image-card .placeholder-text .big {
+        .hero-image .placeholder .big {
             font-size: 6rem;
             display: block;
             color: var(--vandal-red);
@@ -328,7 +329,7 @@
         /* ============================================
                    КНОПКИ
                    ============================================ */
-        .vandal-btn {
+        .btn {
             display: inline-flex;
             align-items: center;
             gap: 12px;
@@ -344,7 +345,7 @@
             position: relative;
             overflow: hidden;
         }
-        .vandal-btn::after {
+        .btn::after {
             content: '';
             position: absolute;
             inset: 0;
@@ -352,11 +353,9 @@
             opacity: 0;
             transition: opacity 0.4s ease;
         }
-        .vandal-btn:hover::after {
-            opacity: 1;
-        }
+        .btn:hover::after { opacity: 1; }
 
-        .vandal-btn-primary {
+        .btn-primary {
             background: var(--vandal-red);
             color: #fff;
             box-shadow: 0 0 40px var(--vandal-red-glow);
@@ -366,18 +365,18 @@
             0%, 100% { box-shadow: 0 0 30px var(--vandal-red-glow); }
             50% { box-shadow: 0 0 80px var(--vandal-red-glow); }
         }
-        .vandal-btn-primary:hover {
+        .btn-primary:hover {
             transform: scale(1.08);
             box-shadow: 0 0 100px var(--vandal-red-glow);
             background: #ff1a1a;
         }
 
-        .vandal-btn-secondary {
+        .btn-secondary {
             background: rgba(255,255,255,0.06);
             color: #fff;
             border: 2px solid var(--vandal-hairline);
         }
-        .vandal-btn-secondary:hover {
+        .btn-secondary:hover {
             background: rgba(255,255,255,0.12);
             transform: scale(1.08);
             border-color: var(--vandal-red);
@@ -430,9 +429,7 @@
             align-items: center;
             margin-top: 40px;
         }
-        @media (min-width: 992px) {
-            .about-grid { grid-template-columns: 1fr 1fr; }
-        }
+        @media(min-width:992px) { .about-grid { grid-template-columns: 1fr 1fr; } }
 
         .about-text {
             opacity: 0;
@@ -447,6 +444,10 @@
             font-size: 1.05rem;
             line-height: 1.9;
             margin-bottom: 16px;
+        }
+        .about-text .highlight {
+            color: var(--vandal-red);
+            font-weight: 700;
         }
 
         .about-image {
@@ -489,9 +490,7 @@
             max-width: 700px;
             margin: 40px auto 0;
         }
-        @media (min-width: 768px) {
-            .contact-grid { grid-template-columns: 1fr 1fr; }
-        }
+        @media(min-width:768px) { .contact-grid { grid-template-columns: 1fr 1fr; } }
 
         .contact-card {
             background: var(--vandal-dark-surface);
@@ -552,7 +551,7 @@
         /* ============================================
                    ФУТЕР
                    ============================================ */
-        .vandal-footer {
+        .footer {
             padding: 48px 0 24px;
             border-top: 2px solid var(--vandal-red);
             background: var(--vandal-dark);
@@ -562,10 +561,8 @@
             grid-template-columns: 1fr;
             gap: 32px;
         }
-        @media (min-width: 768px) {
-            .footer-grid { grid-template-columns: 1fr 1fr 1fr; }
-        }
-        .footer-heading {
+        @media(min-width:768px) { .footer-grid { grid-template-columns: 1fr 1fr 1fr; } }
+        .footer .heading {
             color: #fff;
             font-weight: 700;
             margin-bottom: 12px;
@@ -573,15 +570,15 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
-        .footer-links { list-style: none; }
-        .footer-links li { margin-bottom: 6px; }
-        .footer-links a {
+        .footer ul { list-style: none; }
+        .footer ul li { margin-bottom: 6px; }
+        .footer ul a {
             color: var(--vandal-subtle);
             font-size: 0.9rem;
             transition: color 0.3s;
         }
-        .footer-links a:hover { color: var(--vandal-red); }
-        .footer-bottom {
+        .footer ul a:hover { color: var(--vandal-red); }
+        .footer .bottom {
             margin-top: 32px;
             padding-top: 16px;
             border-top: 1px solid var(--vandal-hairline);
@@ -590,20 +587,17 @@
             font-size: 0.85rem;
         }
 
-        /* ============================================
-                   АДАПТИВ
-                   ============================================ */
-        @media (max-width: 768px) {
+        @media(max-width:768px) {
             .hero-content h1 { font-size: 3rem; }
             .section-title { font-size: 2.2rem; }
-            .hero-image-card { aspect-ratio: 4/3; }
+            .hero-image { aspect-ratio: 4/3; }
             .about-image { aspect-ratio: 4/3; }
             .hero-content .subtitle { font-size: 1.2rem; }
         }
-        @media (max-width: 480px) {
+        @media(max-width:480px) {
             .hero-content h1 { font-size: 2.2rem; }
-            .hero-section { padding: 100px 0 40px; }
-            .vandal-btn { padding: 12px 24px; font-size: 0.8rem; }
+            .hero { padding: 100px 0 40px; }
+            .btn { padding: 12px 24px; font-size: 0.8rem; }
             .hero-content .subtitle { font-size: 1rem; }
         }
     </style>
@@ -614,36 +608,41 @@
     <canvas id="particles-canvas"></canvas>
 
     <!-- ===== НАВИГАЦИЯ ===== -->
-    <nav class="vandal-navbar">
+    <nav class="navbar" id="navbar">
         <div class="container nav-container">
-            <a href="index.html" class="vandal-logo">
-                <span class="logo-icon">⚡</span>
-                <span>VANDAL METAL</span>
+            <a href="index.html" class="logo">
+                <span class="icon">⚡</span>
+                <div class="brand-text">
+                    <span class="name">VANDAL METAL</span>
+                    <span class="sub">Рок-метал группа</span>
+                </div>
             </a>
-            <ul class="vandal-nav-menu">
-                <li><a href="index.html" class="vandal-nav-link active">Главная</a></li>
-                <li><a href="#about" class="vandal-nav-link">О группе</a></li>
-                <li><a href="#contact" class="vandal-nav-link">Контакты</a></li>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">Главная</a></li>
+                <li><a href="about.html" class="nav-link">О группе</a></li>
+                <li><a href="music.html" class="nav-link">Музыка</a></li>
+                <li><a href="contact.html" class="nav-link">Контакты</a></li>
             </ul>
-            <button class="vandal-mobile-toggle" id="mobileToggle" aria-label="Меню">☰</button>
+            <button class="mobile-toggle" id="mobileToggle">☰</button>
         </div>
     </nav>
 
     <!-- ===== МОБИЛЬНОЕ МЕНЮ ===== -->
     <div class="mobile-menu" id="mobileMenu">
-        <div class="container" style="display:flex; flex-direction:column; gap:12px;">
+        <div class="container" style="display:flex;flex-direction:column;gap:12px;">
             <a href="index.html" class="active">Главная</a>
-            <a href="#about">О группе</a>
-            <a href="#contact">Контакты</a>
+            <a href="about.html">О группе</a>
+            <a href="music.html">Музыка</a>
+            <a href="contact.html">Контакты</a>
         </div>
     </div>
 
     <!-- ===== ГЕРО ===== -->
-    <section class="hero-section">
+    <section class="hero">
         <div class="container">
             <div class="hero-grid">
                 <div class="hero-content">
-                    <span class="hero-badge">🔥 Новый альбом скоро</span>
+                    <span class="badge">🔥 Новый альбом скоро</span>
                     <div class="subtitle">Мы — <span class="accent">метал</span></div>
                     <h1>
                         <span class="highlight">VANDAL</span><br>
@@ -653,12 +652,12 @@
                         Рок-метал группа из России. Тяжёлый звук, агрессивная энергия и тексты, которые бьют в цель. Мы ищем сотрудничество и новые концертные площадки.
                     </p>
                     <div style="display: flex; gap: 14px; flex-wrap: wrap;">
-                        <a href="#contact" class="vandal-btn vandal-btn-primary">Связаться →</a>
-                        <a href="#about" class="vandal-btn vandal-btn-secondary">Подробнее</a>
+                        <a href="#contact" class="btn btn-primary">Связаться →</a>
+                        <a href="#about" class="btn btn-secondary">Подробнее</a>
                     </div>
                 </div>
-                <div class="hero-image-card">
-                    <div class="placeholder-text">
+                <div class="hero-image">
+                    <div class="placeholder">
                         <span class="big">⚡</span>
                         VANDAL<br>METAL
                     </div>
@@ -679,13 +678,13 @@
             <div class="about-grid">
                 <div class="about-text">
                     <p>
-                        <strong style="color: var(--vandal-red);">VANDAL METAL</strong> — это рок-метал группа, созданная для тех, кто живёт энергией тяжёлой музыки. Наш звук — это смесь агрессивных риффов, мощных ударных и глубоких текстов.
+                        <span class="highlight">VANDAL METAL</span> — это рок-метал группа, созданная для тех, кто живёт энергией тяжёлой музыки. Наш звук — это смесь агрессивных риффов, мощных ударных и глубоких текстов.
                     </p>
                     <p>
-                        Мы играем в стилях <strong style="color: var(--vandal-red);">метал, хард-рок и альтернативу</strong>. Наши тексты — о борьбе, свободе, внутренней силе и вызове системе.
+                        Мы играем в стилях <span class="highlight">метал, хард-рок и альтернативу</span>. Наши тексты — о борьбе, свободе, внутренней силе и вызове системе.
                     </p>
                     <p>
-                        Мы открыты к <strong style="color: var(--vandal-red);">сотрудничеству</strong>: концерты, фестивали, совместные проекты. Если ты разделяешь нашу энергию — пиши!
+                        Мы открыты к <span class="highlight">сотрудничеству</span>: концерты, фестивали, совместные проекты. Если ты разделяешь нашу энергию — пиши!
                     </p>
                 </div>
                 <div class="about-image">
@@ -722,35 +721,36 @@
     </section>
 
     <!-- ===== ФУТЕР ===== -->
-    <footer class="vandal-footer">
+    <footer class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div>
-                    <a href="index.html" class="vandal-logo">
-                        <span class="logo-icon">⚡</span>
-                        <span>VANDAL METAL</span>
+                    <a href="index.html" class="logo" style="gap:10px;font-size:1rem;">
+                        <span class="icon" style="font-size:1.4rem;">⚡</span>
+                        <div>
+                            <span style="font-weight:800;color:#fff;">VANDAL METAL</span>
+                            <span style="display:block;font-size:0.6rem;color:var(--vandal-subtle);">Рок-метал группа</span>
+                        </div>
                     </a>
-                    <p style="color: var(--vandal-subtle); margin-top: 4px;">Рок-метал группа</p>
                 </div>
                 <div>
-                    <h4 class="footer-heading">Навигация</h4>
-                    <ul class="footer-links">
+                    <h4 class="heading">Навигация</h4>
+                    <ul>
                         <li><a href="index.html">Главная</a></li>
-                        <li><a href="#about">О группе</a></li>
-                        <li><a href="#contact">Контакты</a></li>
+                        <li><a href="about.html">О группе</a></li>
+                        <li><a href="music.html">Музыка</a></li>
+                        <li><a href="contact.html">Контакты</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="footer-heading">Контакты</h4>
-                    <ul class="footer-links">
+                    <h4 class="heading">Контакты</h4>
+                    <ul>
                         <li><a href="mailto:vandalmusical@mail.ru">vandalmusical@mail.ru</a></li>
                         <li><a href="https://t.me/VANDALMETAL" target="_blank">@VANDALMETAL</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 VANDAL METAL. Все права защищены.</p>
-            </div>
+            <div class="bottom"><p>&copy; 2026 VANDAL METAL. Все права защищены.</p></div>
         </div>
     </footer>
 
@@ -758,93 +758,57 @@
     СКРИПТЫ
     ============================================ -->
 
-    <!-- 1. АГРЕССИВНЫЕ ЧАСТИЦЫ -->
+    <!-- 1. ЧАСТИЦЫ -->
     <script>
         (function() {
             const canvas = document.getElementById('particles-canvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
-            let w, h;
-            const particles = [];
-            const COUNT = 100;
+            let w, h, particles = [],
+                COUNT = 80;
 
-            function resize() {
-                w = canvas.width = window.innerWidth;
-                h = canvas.height = window.innerHeight;
-            }
+            function resize() { w = canvas.width = window.innerWidth, h = canvas.height = window.innerHeight; }
             window.addEventListener('resize', resize);
             resize();
 
             class Particle {
                 constructor() { this.reset(); }
-                reset() {
-                    this.x = Math.random() * w;
-                    this.y = Math.random() * h;
-                    this.size = Math.random() * 3 + 0.5;
-                    this.speedX = (Math.random() - 0.5) * 0.6;
-                    this.speedY = (Math.random() - 0.5) * 0.6;
-                    this.opacity = Math.random() * 0.5 + 0.15;
-                    this.targetSize = this.size * (Math.random() * 2 + 0.5);
-                }
-                update() {
-                    this.x += this.speedX;
-                    this.y += this.speedY;
-                    if (this.x < 0 || this.x > w) this.speedX *= -1;
-                    if (this.y < 0 || this.y > h) this.speedY *= -1;
-                    this.size += (this.targetSize - this.size) * 0.005;
-                }
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(204, 0, 0, ${this.opacity})`;
-                    ctx.fill();
-                }
+                reset() { this.x = Math.random() * w, this.y = Math.random() * h, this.size = Math.random() * 3 + 0.5, this.speedX = (Math
+                        .random() - .5) * 0.6, this.speedY = (Math.random() - .5) * 0.6, this.opacity = Math.random() * 0.5 +
+                        0.15, this.targetSize = this.size * (Math.random() * 2 + 0.5); }
+                update() { this.x += this.speedX, this.y += this.speedY, (this.x < 0 || this.x > w) && (this.speedX *= -1), (this
+                        .y < 0 || this.y > h) && (this.speedY *= -1), this.size += (this.targetSize - this.size) * 0.005; }
+                draw() { ctx.beginPath(), ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2), ctx.fillStyle =
+                        `rgba(204, 0, 0, ${this.opacity})`, ctx.fill(); }
             }
-
             for (let i = 0; i < COUNT; i++) particles.push(new Particle());
 
-            let mouseX = null, mouseY = null;
-            canvas.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-            });
-            canvas.addEventListener('mouseleave', () => {
-                mouseX = null;
+            let mouseX = null,
                 mouseY = null;
-            });
+            canvas.addEventListener('mousemove', e => { mouseX = e.clientX, mouseY = e.clientY; });
+            canvas.addEventListener('mouseleave', () => { mouseX = null, mouseY = null; });
 
             function animate() {
                 ctx.clearRect(0, 0, w, h);
                 particles.forEach(p => {
                     if (mouseX !== null && mouseY !== null) {
-                        const dx = p.x - mouseX;
-                        const dy = p.y - mouseY;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 180) {
-                            const force = (180 - dist) / 180 * 0.04;
-                            p.x += dx * force;
-                            p.y += dy * force;
-                        }
+                        const dx = p.x - mouseX,
+                            dy = p.y - mouseY,
+                            dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 180) { const force = (180 - dist) / 180 * 0.04;
+                            p.x += dx * force, p.y += dy * force; }
                     }
-                    p.update();
-                    p.draw();
+                    p.update(), p.draw();
                 });
-
-                for (let i = 0; i < particles.length; i++) {
+                for (let i = 0; i < particles.length; i++)
                     for (let j = i + 1; j < particles.length; j++) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 140) {
-                            ctx.beginPath();
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.strokeStyle = `rgba(204, 0, 0, ${0.08 * (1 - dist/140)})`;
-                            ctx.lineWidth = 1;
-                            ctx.stroke();
-                        }
+                        const dx = particles[i].x - particles[j].x,
+                            dy = particles[i].y - particles[j].y,
+                            dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 140) ctx.beginPath(), ctx.moveTo(particles[i].x, particles[i].y), ctx.lineTo(particles[j].x,
+                            particles[j].y), ctx.strokeStyle = `rgba(204, 0, 0, ${0.08 * (1 - dist / 140)})`, ctx
+                            .lineWidth = 1, ctx.stroke();
                     }
-                }
                 requestAnimationFrame(animate);
             }
             animate();
@@ -854,9 +818,22 @@
     <!-- 2. МОБИЛЬНОЕ МЕНЮ -->
     <script>
         document.getElementById('mobileToggle')?.addEventListener('click', function() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('open');
+            document.getElementById('mobileMenu').classList.toggle('open');
         });
+    </script>
+
+    <!-- 3. НАВИГАЦИЯ ПРИ СКРОЛЛЕ -->
+    <script>
+        (function() {
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        })();
     </script>
 
 </body>
