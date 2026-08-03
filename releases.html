@@ -9,9 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* ============================================
-                   ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ (ЧЁРНО-БЕЛЫЕ)
-                   ============================================ */
         :root {
             --vandal-white: #ffffff;
             --vandal-white-glow: rgba(255, 255, 255, 0.15);
@@ -48,9 +45,6 @@
             z-index: 0;
         }
 
-        /* ============================================
-                   НАВИГАЦИЯ
-                   ============================================ */
         .navbar {
             position: sticky;
             top: 0;
@@ -174,9 +168,6 @@
         .mobile-menu a.active { color: var(--vandal-white); }
         @media(min-width:768px) { .mobile-menu { display: none !important; } }
 
-        /* ============================================
-                   ОСНОВНОЙ КОНТЕНТ
-                   ============================================ */
         .main-content {
             position: relative;
             z-index: 1;
@@ -201,9 +192,6 @@
         .delay-2 { animation-delay: .2s; }
         .delay-3 { animation-delay: .3s; }
 
-        /* ============================================
-                   ЗАГОЛОВОК
-                   ============================================ */
         .releases-header {
             text-align: center;
             margin-bottom: 50px;
@@ -241,8 +229,8 @@
         }
 
         /* ============================================
-           ТАЙМЕР
-           ============================================ */
+                   ТАЙМЕР
+                   ============================================ */
         .timer-section {
             background: var(--vandal-dark-surface);
             border: 1px solid var(--vandal-hairline);
@@ -305,12 +293,10 @@
             letter-spacing: 0.05em;
         }
 
-        /* Скрытый таймер после завершения */
         .timer-section.hidden {
             display: none;
         }
 
-        /* Сообщение о выходе релиза */
         .released-message {
             display: none;
             text-align: center;
@@ -344,9 +330,6 @@
             display: block;
         }
 
-        /* ============================================
-           КАРТОЧКА РЕЛИЗА
-           ============================================ */
         .release-card {
             max-width: 700px;
             margin: 0 auto;
@@ -365,7 +348,6 @@
             transform: translateY(-6px) scale(1.01);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
-
         .release-card .cover {
             background: var(--vandal-dark-surface);
             display: flex;
@@ -380,7 +362,6 @@
             height: 100%;
             object-fit: cover;
         }
-
         .release-card .info {
             padding: 24px 28px;
             display: flex;
@@ -424,7 +405,6 @@
             font-weight: 600;
             margin-top: 4px;
         }
-
         .release-card .info .actions {
             display: flex;
             gap: 12px;
@@ -467,9 +447,6 @@
             border-color: var(--vandal-white);
         }
 
-        /* ============================================
-                   КНОПКИ
-                   ============================================ */
         .btn-group {
             display: flex;
             gap: 14px;
@@ -513,9 +490,6 @@
             border-color: var(--vandal-white);
         }
 
-        /* ============================================
-                   ФУТЕР
-                   ============================================ */
         .footer {
             padding: 48px 0 24px;
             border-top: 1px solid var(--vandal-hairline);
@@ -809,11 +783,9 @@
                 const now = Date.now();
                 const diff = Math.max(0, target - now);
 
-                // Если таймер закончился
                 if (diff === 0) {
                     timerSection.classList.add('hidden');
                     releasedMessage.classList.add('show');
-                    // Обновляем дату в карточке
                     const releaseDate = releaseCard.querySelector('.release-date');
                     if (releaseDate) {
                         releaseDate.textContent = '✅ Уже доступен!';
@@ -822,7 +794,6 @@
                     return;
                 }
 
-                // Иначе обновляем таймер
                 const days = Math.floor(diff / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
