@@ -10,15 +10,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         /* ============================================
-                   ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
+                   ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ (ЧЁРНО-БЕЛЫЕ)
                    ============================================ */
         :root {
-            --vandal-red: #cc0000;
-            --vandal-red-glow: rgba(204, 0, 0, 0.4);
-            --vandal-red-subtle: rgba(204, 0, 0, 0.12);
+            --vandal-white: #ffffff;
+            --vandal-white-glow: rgba(255, 255, 255, 0.15);
+            --vandal-white-subtle: rgba(255, 255, 255, 0.06);
             --vandal-dark: #0a0a0a;
             --vandal-dark-surface: #141414;
-            --vandal-hairline: rgba(255, 255, 255, 0.06);
+            --vandal-hairline: rgba(255, 255, 255, 0.08);
             --vandal-subtle: #888888;
             --vandal-muted: #555555;
             --vandal-default: #eeeeee;
@@ -42,10 +42,10 @@
                    ============================================ */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--vandal-dark); }
-        ::-webkit-scrollbar-thumb { background: var(--vandal-red); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: var(--vandal-white); border-radius: 10px; }
 
         /* ============================================
-                   ФОН: ЧАСТИЦЫ
+                   ФОН: ЧАСТИЦЫ (БЕЛЫЕ)
                    ============================================ */
         #particles-canvas {
             position: fixed;
@@ -63,9 +63,8 @@
             z-index: 50;
             backdrop-filter: blur(16px);
             background: rgba(10, 10, 10, 0.85);
-            border-bottom: 2px solid var(--vandal-red);
+            border-bottom: 1px solid var(--vandal-hairline);
             padding: 14px 0;
-            box-shadow: 0 0 40px rgba(204, 0, 0, 0.1);
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .navbar.scrolled {
@@ -89,13 +88,13 @@
         }
         .logo .icon {
             font-size: 1.8rem;
-            color: var(--vandal-red);
-            filter: drop-shadow(0 0 30px var(--vandal-red-glow));
+            color: var(--vandal-white);
+            filter: drop-shadow(0 0 30px var(--vandal-white-glow));
             animation: logoPulse 2s ease-in-out infinite;
         }
         @keyframes logoPulse {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px var(--vandal-red-glow)); }
-            50% { transform: scale(1.15); filter: drop-shadow(0 0 60px var(--vandal-red-glow)); }
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px var(--vandal-white-glow)); }
+            50% { transform: scale(1.15); filter: drop-shadow(0 0 60px var(--vandal-white-glow)); }
         }
         .logo .brand-text {
             display: flex;
@@ -103,7 +102,7 @@
             line-height: 1.2;
         }
         .logo .brand-text .name {
-            background: linear-gradient(135deg, #fff 0%, var(--vandal-red) 100%);
+            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -132,7 +131,7 @@
             position: relative;
         }
         .nav-link:hover { color: #fff; }
-        .nav-link.active { color: var(--vandal-red); }
+        .nav-link.active { color: var(--vandal-white); }
         .nav-link.active::after {
             content: '';
             position: absolute;
@@ -140,14 +139,14 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background: var(--vandal-red);
+            background: var(--vandal-white);
             border-radius: 2px;
-            box-shadow: 0 0 30px var(--vandal-red-glow);
+            box-shadow: 0 0 30px var(--vandal-white-glow);
             animation: lineGlow 1.5s ease-in-out infinite;
         }
         @keyframes lineGlow {
-            0%, 100% { box-shadow: 0 0 20px var(--vandal-red-glow); }
-            50% { box-shadow: 0 0 60px var(--vandal-red-glow); }
+            0%, 100% { box-shadow: 0 0 20px var(--vandal-white-glow); }
+            50% { box-shadow: 0 0 60px var(--vandal-white-glow); }
         }
         .mobile-toggle {
             background: none;
@@ -166,7 +165,7 @@
             padding: 20px 0;
             background: rgba(10,10,10,0.96);
             backdrop-filter: blur(16px);
-            border-bottom: 2px solid var(--vandal-red);
+            border-bottom: 1px solid var(--vandal-hairline);
         }
         .mobile-menu.open { display: flex; }
         .mobile-menu a {
@@ -178,7 +177,7 @@
             padding: 6px 0;
         }
         .mobile-menu a:hover { color: #fff; }
-        .mobile-menu a.active { color: var(--vandal-red); }
+        .mobile-menu a.active { color: var(--vandal-white); }
         @media(min-width:768px) { .mobile-menu { display: none !important; } }
 
         /* ============================================
@@ -222,8 +221,8 @@
             display: inline-block;
             padding: 6px 18px;
             border-radius: 40px;
-            background: var(--vandal-red-subtle);
-            color: var(--vandal-red);
+            background: var(--vandal-white-subtle);
+            color: var(--vandal-white);
             font-size: 0.7rem;
             font-weight: 700;
             text-transform: uppercase;
@@ -237,7 +236,7 @@
             margin-bottom: 8px;
         }
         .releases-header h1 .highlight {
-            background: linear-gradient(135deg, var(--vandal-red), #ff3333);
+            background: linear-gradient(135deg, var(--vandal-white), #888);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -248,6 +247,60 @@
             font-size: 1.1rem;
             max-width: 500px;
             margin: 0 auto;
+        }
+
+        /* ============================================
+                   ТАЙМЕР ДО РЕЛИЗА
+                   ============================================ */
+        .timer-section {
+            background: var(--vandal-dark-surface);
+            border: 1px solid var(--vandal-hairline);
+            border-radius: 20px;
+            padding: 32px 24px;
+            margin-bottom: 40px;
+            text-align: center;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .timer-section .label {
+            font-size: 0.7rem;
+            color: var(--vandal-subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 8px;
+        }
+        .timer-section .date {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--vandal-white);
+            margin-bottom: 12px;
+        }
+        .timer-section .timer-grid {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .timer-section .timer-item {
+            background: rgba(255,255,255,0.03);
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--vandal-hairline);
+            min-width: 70px;
+        }
+        .timer-section .timer-item .num {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--vandal-white);
+            display: block;
+            line-height: 1;
+        }
+        .timer-section .timer-item .lbl {
+            font-size: 0.6rem;
+            color: var(--vandal-subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         /* ============================================
@@ -267,7 +320,7 @@
         .release-card {
             background: rgba(18, 18, 22, 0.6);
             backdrop-filter: blur(16px);
-            border: 2px solid var(--vandal-hairline);
+            border: 1px solid var(--vandal-hairline);
             border-radius: 24px;
             overflow: hidden;
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -282,7 +335,7 @@
             transform: translateY(0) scale(1);
         }
         .release-card:hover {
-            border-color: var(--vandal-red);
+            border-color: var(--vandal-white);
             transform: translateY(-6px) scale(1.01);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
@@ -300,12 +353,12 @@
             justify-content: center;
             overflow: hidden;
             min-height: 200px;
-            border-bottom: 2px solid var(--vandal-hairline);
+            border-bottom: 1px solid var(--vandal-hairline);
         }
         @media(min-width:768px) {
             .release-card .cover {
                 border-bottom: none;
-                border-right: 2px solid var(--vandal-hairline);
+                border-right: 1px solid var(--vandal-hairline);
                 min-height: 200px;
             }
         }
@@ -316,8 +369,8 @@
         }
         .release-card .cover .placeholder {
             text-align: center;
-            color: var(--vandal-red);
-            filter: drop-shadow(0 0 40px var(--vandal-red-glow));
+            color: var(--vandal-white);
+            filter: drop-shadow(0 0 40px var(--vandal-white-glow));
             padding: 20px;
         }
         .release-card .cover .placeholder .big {
@@ -341,8 +394,8 @@
             display: inline-block;
             padding: 2px 12px;
             border-radius: 40px;
-            background: var(--vandal-red-subtle);
-            color: var(--vandal-red);
+            background: var(--vandal-white-subtle);
+            color: var(--vandal-white);
             font-size: 0.65rem;
             font-weight: 700;
             text-transform: uppercase;
@@ -371,7 +424,7 @@
             font-weight: 600;
         }
         .release-card .info .release-date {
-            color: var(--vandal-red);
+            color: var(--vandal-white);
             font-size: 0.8rem;
             font-weight: 600;
             margin-top: 4px;
@@ -398,14 +451,14 @@
             cursor: pointer;
             text-decoration: none;
         }
-        .release-card .info .actions .btn-sm-red {
-            background: var(--vandal-red);
-            color: #fff;
-            box-shadow: 0 0 20px rgba(204, 0, 0, 0.2);
+        .release-card .info .actions .btn-sm-white {
+            background: var(--vandal-white);
+            color: #0a0a0c;
+            box-shadow: 0 0 20px var(--vandal-white-glow);
         }
-        .release-card .info .actions .btn-sm-red:hover {
+        .release-card .info .actions .btn-sm-white:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 40px var(--vandal-red-glow);
+            box-shadow: 0 0 40px var(--vandal-white-glow);
         }
         .release-card .info .actions .btn-sm-ghost {
             background: rgba(255,255,255,0.04);
@@ -415,7 +468,7 @@
         .release-card .info .actions .btn-sm-ghost:hover {
             background: rgba(255,255,255,0.1);
             transform: scale(1.05);
-            border-color: var(--vandal-red);
+            border-color: var(--vandal-white);
         }
 
         /* ============================================
@@ -444,24 +497,24 @@
             text-decoration: none;
         }
         .btn-primary {
-            background: var(--vandal-red);
-            color: #fff;
-            box-shadow: 0 0 30px rgba(204, 0, 0, 0.2);
+            background: var(--vandal-white);
+            color: #0a0a0c;
+            box-shadow: 0 0 30px var(--vandal-white-glow);
         }
         .btn-primary:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 60px var(--vandal-red-glow);
-            background: #ff1a1a;
+            box-shadow: 0 0 60px var(--vandal-white-glow);
+            background: #ddd;
         }
         .btn-secondary {
             background: rgba(255,255,255,0.06);
             color: #fff;
-            border: 2px solid var(--vandal-hairline);
+            border: 1px solid var(--vandal-hairline);
         }
         .btn-secondary:hover {
             background: rgba(255,255,255,0.12);
             transform: scale(1.05);
-            border-color: var(--vandal-red);
+            border-color: var(--vandal-white);
         }
 
         /* ============================================
@@ -469,7 +522,7 @@
                    ============================================ */
         .footer {
             padding: 48px 0 24px;
-            border-top: 2px solid var(--vandal-red);
+            border-top: 1px solid var(--vandal-hairline);
             background: var(--vandal-dark);
             margin-top: 60px;
         }
@@ -494,7 +547,7 @@
             font-size: 0.9rem;
             transition: color 0.3s;
         }
-        .footer ul a:hover { color: var(--vandal-red); }
+        .footer ul a:hover { color: var(--vandal-white); }
         .footer .bottom {
             margin-top: 32px;
             padding-top: 16px;
@@ -509,6 +562,8 @@
             .release-card .cover { min-height: 140px; }
             .release-card .info { padding: 20px; }
             .release-card .info .title { font-size: 1.2rem; }
+            .timer-section .timer-item { min-width: 60px; padding: 10px 14px; }
+            .timer-section .timer-item .num { font-size: 1.6rem; }
         }
         @media(max-width:480px) {
             .releases-header h1 { font-size: 1.8rem; }
@@ -517,6 +572,8 @@
             .release-card .info .title { font-size: 1rem; }
             .btn-group { flex-direction: column; align-items: center; }
             .btn { width: 100%; justify-content: center; }
+            .timer-section .timer-item { min-width: 50px; padding: 8px 10px; }
+            .timer-section .timer-item .num { font-size: 1.2rem; }
         }
     </style>
 </head>
@@ -568,6 +625,30 @@
                 <p>Альбомы, синглы и EP группы</p>
             </header>
 
+            <!-- ===== ТАЙМЕР ДО РЕЛИЗА ===== -->
+            <div class="timer-section animate-fadeUp delay-1">
+                <div class="label">🎵 Следующий релиз</div>
+                <div class="date">16 августа 2026</div>
+                <div class="timer-grid" id="timerGrid">
+                    <div class="timer-item">
+                        <span class="num" id="days">0</span>
+                        <span class="lbl">дней</span>
+                    </div>
+                    <div class="timer-item">
+                        <span class="num" id="hours">0</span>
+                        <span class="lbl">часов</span>
+                    </div>
+                    <div class="timer-item">
+                        <span class="num" id="minutes">0</span>
+                        <span class="lbl">минут</span>
+                    </div>
+                    <div class="timer-item">
+                        <span class="num" id="seconds">0</span>
+                        <span class="lbl">секунд</span>
+                    </div>
+                </div>
+            </div>
+
             <!-- СЕТКА РЕЛИЗОВ -->
             <div class="releases-grid">
 
@@ -578,14 +659,14 @@
                     </div>
                     <div class="info">
                         <span class="type">🎵 Сингл</span>
-                        <h3 class="title">Пошляк</h3>
+                        <h3 class="title">Новый сингл</h3>
                         <div class="year">2026</div>
                         <div class="release-date">🔜 16 августа 2026</div>
                         <div class="tracks">
                             <span>Доступен на всех цифровых площадках</span>
                         </div>
                         <div class="actions">
-                            <a href="#" class="btn-sm btn-sm-red">▶ Предзаказ</a>
+                            <a href="#" class="btn-sm btn-sm-white">▶ Предзаказ</a>
                             <a href="#" class="btn-sm btn-sm-ghost">Подробнее</a>
                         </div>
                     </div>
@@ -607,7 +688,7 @@
                             <span>Треки:</span> Пролог, Падение, Восстание, Финал
                         </div>
                         <div class="actions">
-                            <a href="#" class="btn-sm btn-sm-red">▶ Слушать</a>
+                            <a href="#" class="btn-sm btn-sm-white">▶ Слушать</a>
                             <a href="#" class="btn-sm btn-sm-ghost">Подробнее</a>
                         </div>
                     </div>
@@ -629,7 +710,7 @@
                             <span>Треки:</span> Воля, Воля (инструментал)
                         </div>
                         <div class="actions">
-                            <a href="#" class="btn-sm btn-sm-red">▶ Слушать</a>
+                            <a href="#" class="btn-sm btn-sm-white">▶ Слушать</a>
                             <a href="#" class="btn-sm btn-sm-ghost">Подробнее</a>
                         </div>
                     </div>
@@ -651,7 +732,7 @@
                             <span>Треки:</span> Интро, Разрушитель, Стальной дождь, Без лица, Финал
                         </div>
                         <div class="actions">
-                            <a href="#" class="btn-sm btn-sm-red">▶ Слушать</a>
+                            <a href="#" class="btn-sm btn-sm-white">▶ Слушать</a>
                             <a href="#" class="btn-sm btn-sm-ghost">Подробнее</a>
                         </div>
                     </div>
@@ -706,7 +787,7 @@
     СКРИПТЫ
     ============================================ -->
 
-    <!-- 1. ЧАСТИЦЫ -->
+    <!-- 1. ЧАСТИЦЫ (БЕЛЫЕ) -->
     <script>
         (function() {
             const canvas = document.getElementById('particles-canvas');
@@ -722,12 +803,12 @@
             class Particle {
                 constructor() { this.reset(); }
                 reset() { this.x = Math.random() * w, this.y = Math.random() * h, this.size = Math.random() * 3 + 0.5, this.speedX = (Math
-                        .random() - .5) * 0.6, this.speedY = (Math.random() - .5) * 0.6, this.opacity = Math.random() * 0.5 +
-                        0.15, this.targetSize = this.size * (Math.random() * 2 + 0.5); }
+                        .random() - .5) * 0.6, this.speedY = (Math.random() - .5) * 0.6, this.opacity = Math.random() * 0.4 +
+                        0.1, this.targetSize = this.size * (Math.random() * 2 + 0.5); }
                 update() { this.x += this.speedX, this.y += this.speedY, (this.x < 0 || this.x > w) && (this.speedX *= -1), (this
                         .y < 0 || this.y > h) && (this.speedY *= -1), this.size += (this.targetSize - this.size) * 0.005; }
                 draw() { ctx.beginPath(), ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2), ctx.fillStyle =
-                        `rgba(204, 0, 0, ${this.opacity})`, ctx.fill(); }
+                        `rgba(255, 255, 255, ${this.opacity})`, ctx.fill(); }
             }
             for (let i = 0; i < COUNT; i++) particles.push(new Particle());
 
@@ -754,7 +835,7 @@
                             dy = particles[i].y - particles[j].y,
                             dist = Math.sqrt(dx * dx + dy * dy);
                         if (dist < 140) ctx.beginPath(), ctx.moveTo(particles[i].x, particles[i].y), ctx.lineTo(particles[j].x,
-                            particles[j].y), ctx.strokeStyle = `rgba(204, 0, 0, ${0.08 * (1 - dist / 140)})`, ctx
+                            particles[j].y), ctx.strokeStyle = `rgba(255, 255, 255, ${0.06 * (1 - dist / 140)})`, ctx
                             .lineWidth = 1, ctx.stroke();
                     }
                 requestAnimationFrame(animate);
@@ -800,6 +881,31 @@
                     navbar.classList.remove('scrolled');
                 }
             });
+        })();
+    </script>
+
+    <!-- 5. ТАЙМЕР -->
+    <script>
+        (function() {
+            const target = new Date('2026-08-16T00:00:00').getTime();
+
+            function updateTimer() {
+                const now = Date.now();
+                const diff = Math.max(0, target - now);
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = days;
+                document.getElementById('hours').textContent = hours;
+                document.getElementById('minutes').textContent = minutes;
+                document.getElementById('seconds').textContent = seconds;
+            }
+
+            updateTimer();
+            setInterval(updateTimer, 1000);
         })();
     </script>
 
