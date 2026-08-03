@@ -288,8 +288,8 @@
             position: relative;
             border-radius: 20px;
             overflow: hidden;
-            border: 1px solid var(--vandal-hairline);
-            box-shadow: 0 0 60px rgba(255, 255, 255, 0.03);
+            border: 2px solid var(--vandal-white);
+            box-shadow: 0 0 60px rgba(255, 255, 255, 0.05), 0 0 120px rgba(255, 255, 255, 0.02);
             background: var(--vandal-dark-surface);
             aspect-ratio: 4/3;
             display: flex;
@@ -300,29 +300,24 @@
         }
         .hero-image:hover {
             transform: scale(1.02);
-            box-shadow: 0 0 100px rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 100px rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.8);
         }
         @keyframes heroFloat {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-12px); }
         }
 
-        .hero-image .placeholder {
-            text-align: center;
-            font-size: 1.2rem;
-            color: var(--vandal-subtle);
-            padding: 20px;
-        }
-        .hero-image .placeholder .big {
-            font-size: 6rem;
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
             display: block;
-            color: var(--vandal-white);
-            filter: drop-shadow(0 0 60px var(--vandal-white-glow));
-            animation: iconFloat 3s ease-in-out infinite;
+            padding: 12px;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        @keyframes iconFloat {
-            0%, 100% { transform: translateY(0) rotate(-4deg) scale(1); }
-            50% { transform: translateY(-16px) rotate(4deg) scale(1.1); }
+        .hero-image:hover img {
+            transform: scale(1.04);
         }
 
         /* ============================================
@@ -598,6 +593,8 @@
             .hero { padding: 100px 0 40px; }
             .btn { padding: 12px 24px; font-size: 0.8rem; }
             .hero-content .subtitle { font-size: 1rem; }
+            .hero-image { border-width: 1px; }
+            .hero-image img { padding: 6px; }
         }
     </style>
 </head>
@@ -656,10 +653,7 @@
                     </div>
                 </div>
                 <div class="hero-image">
-                    <div class="placeholder">
-                        <span class="big">⚡</span>
-                        VANDAL<br>METAL
-                    </div>
+                    <img src="images/IMG_20260803_020258_570.jpg" alt="VANDAL METAL" loading="lazy">
                 </div>
             </div>
         </div>
