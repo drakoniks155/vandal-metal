@@ -8,10 +8,182 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     <style>
         /* ============================================
-                   ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ ABOUT
+                   ЧЁРНО-БЕЛЫЙ СТИЛЬ VANDAL METAL
+                   ============================================ */
+        :root {
+            --vandal-white: #ffffff;
+            --vandal-white-glow: rgba(255, 255, 255, 0.15);
+            --vandal-white-subtle: rgba(255, 255, 255, 0.06);
+            --vandal-dark: #0a0a0a;
+            --vandal-dark-surface: #141414;
+            --vandal-hairline: rgba(255, 255, 255, 0.08);
+            --vandal-subtle: #888888;
+            --vandal-muted: #555555;
+            --vandal-default: #eeeeee;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--vandal-dark);
+            color: var(--vandal-default);
+            overflow-x: hidden;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
+        img { display: block; max-width: 100%; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--vandal-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--vandal-white); border-radius: 10px; }
+
+        /* ============================================
+                   НАВИГАЦИЯ
+                   ============================================ */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(16px);
+            background: rgba(10, 10, 10, 0.85);
+            border-bottom: 1px solid var(--vandal-hairline);
+            padding: 14px 0;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .navbar.scrolled {
+            background: rgba(10, 10, 10, 0.95);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+        }
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 900;
+            font-size: 1.4rem;
+            letter-spacing: -0.02em;
+            color: #fff;
+            text-decoration: none;
+        }
+        .logo .icon {
+            font-size: 1.8rem;
+            color: var(--vandal-white);
+            filter: drop-shadow(0 0 30px var(--vandal-white-glow));
+            animation: logoPulse 2s ease-in-out infinite;
+        }
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px var(--vandal-white-glow)); }
+            50% { transform: scale(1.15); filter: drop-shadow(0 0 60px var(--vandal-white-glow)); }
+        }
+        .logo .brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        .logo .brand-text .name {
+            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .logo .brand-text .sub {
+            font-size: 0.6rem;
+            color: var(--vandal-subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .nav-menu {
+            display: none;
+            list-style: none;
+            gap: 32px;
+        }
+        @media(min-width:768px) { .nav-menu { display: flex; } }
+        .nav-link {
+            color: var(--vandal-subtle);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            transition: all 0.3s;
+            padding: 4px 0;
+            position: relative;
+        }
+        .nav-link:hover { color: #fff; }
+        .nav-link.active { color: var(--vandal-white); }
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--vandal-white);
+            border-radius: 2px;
+            box-shadow: 0 0 30px var(--vandal-white-glow);
+            animation: lineGlow 1.5s ease-in-out infinite;
+        }
+        @keyframes lineGlow {
+            0%, 100% { box-shadow: 0 0 20px var(--vandal-white-glow); }
+            50% { box-shadow: 0 0 60px var(--vandal-white-glow); }
+        }
+        .mobile-toggle {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+        @media(min-width:768px) { .mobile-toggle { display: none; } }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            padding: 20px 0;
+            background: rgba(10,10,10,0.96);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--vandal-hairline);
+        }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu a {
+            color: var(--vandal-subtle);
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 6px 0;
+        }
+        .mobile-menu a:hover { color: #fff; }
+        .mobile-menu a.active { color: var(--vandal-white); }
+        @media(min-width:768px) { .mobile-menu { display: none !important; } }
+
+        /* ============================================
+                   ОСНОВНОЙ КОНТЕНТ
+                   ============================================ */
+        .main-content {
+            position: relative;
+            z-index: 1;
+            padding: 120px 0 80px;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* ============================================
+                   ЗАГОЛОВОК
                    ============================================ */
         .about-header {
             text-align: center;
@@ -50,8 +222,8 @@
         }
 
         /* ============================================
-           ОСНОВНАЯ КАРТОЧКА
-           ============================================ */
+                   КАРТОЧКА
+                   ============================================ */
         .about-card {
             background: var(--vandal-dark-surface);
             backdrop-filter: blur(16px);
@@ -64,10 +236,6 @@
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
             animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
             opacity: 0;
-        }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(40px) scale(0.96); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
         }
         .about-card:hover {
             border-color: var(--vandal-white);
@@ -163,31 +331,104 @@
         }
 
         /* ============================================
-           КНОПКИ
-           ============================================ */
+                   КНОПКИ
+                   ============================================ */
         .btn-group {
             display: flex;
             gap: 14px;
             flex-wrap: wrap;
             margin-top: 16px;
         }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn-primary {
+            background: var(--vandal-white);
+            color: #0a0a0c;
+            box-shadow: 0 0 30px var(--vandal-white-glow);
+        }
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 60px var(--vandal-white-glow);
+            background: #ddd;
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.06);
+            color: #fff;
+            border: 1px solid var(--vandal-hairline);
+        }
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.12);
+            transform: scale(1.05);
+            border-color: var(--vandal-white);
+        }
+
+        /* ============================================
+                   ФУТЕР
+                   ============================================ */
+        .footer {
+            padding: 48px 0 24px;
+            border-top: 1px solid var(--vandal-hairline);
+            background: var(--vandal-dark);
+            margin-top: 60px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+        @media(min-width:768px) { .footer-grid { grid-template-columns: 1fr 1fr 1fr; } }
+        .footer .heading {
+            color: #fff;
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .footer ul { list-style: none; }
+        .footer ul li { margin-bottom: 6px; }
+        .footer ul a {
+            color: var(--vandal-subtle);
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .footer ul a:hover { color: var(--vandal-white); }
+        .footer .bottom {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid var(--vandal-hairline);
+            text-align: center;
+            color: var(--vandal-muted);
+            font-size: 0.85rem;
+        }
 
         @media(max-width:768px) {
             .about-card { padding: 32px 20px; }
             .about-header h1 { font-size: 2rem; }
+            .about-card .history .image-box { aspect-ratio: 4/3; }
         }
         @media(max-width:480px) {
             .about-card { padding: 24px 16px; }
             .about-header h1 { font-size: 1.8rem; }
             .btn-group { flex-direction: column; align-items: center; }
-            .btn-group .btn { width: 100%; justify-content: center; }
+            .btn { width: 100%; justify-content: center; }
         }
     </style>
 </head>
 <body>
-
-    <!-- ===== ФОН: ЧАСТИЦЫ ===== -->
-    <canvas id="particles-canvas"></canvas>
 
     <!-- ===== НАВИГАЦИЯ ===== -->
     <nav class="navbar" id="navbar">
@@ -220,8 +461,7 @@
     </div>
 
     <!-- ===== ОСНОВНОЙ КОНТЕНТ ===== -->
-    <main style="position:relative;z-index:1;padding:120px 0 80px;">
-
+    <main class="main-content">
         <div class="container">
 
             <!-- ЗАГОЛОВОК -->
@@ -279,7 +519,6 @@
             </div>
 
         </div>
-
     </main>
 
     <!-- ===== ФУТЕР ===== -->
@@ -320,71 +559,14 @@
     СКРИПТЫ
     ============================================ -->
 
-    <!-- 1. ЧАСТИЦЫ -->
-    <script>
-        (function() {
-            const canvas = document.getElementById('particles-canvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            let w, h, particles = [],
-                COUNT = 80;
-
-            function resize() { w = canvas.width = window.innerWidth, h = canvas.height = window.innerHeight; }
-            window.addEventListener('resize', resize);
-            resize();
-
-            class Particle {
-                constructor() { this.reset(); }
-                reset() { this.x = Math.random() * w, this.y = Math.random() * h, this.size = Math.random() * 3 + 0.5, this.speedX = (Math
-                        .random() - .5) * 0.6, this.speedY = (Math.random() - .5) * 0.6, this.opacity = Math.random() * 0.4 +
-                        0.1, this.targetSize = this.size * (Math.random() * 2 + 0.5); }
-                update() { this.x += this.speedX, this.y += this.speedY, (this.x < 0 || this.x > w) && (this.speedX *= -1), (this
-                        .y < 0 || this.y > h) && (this.speedY *= -1), this.size += (this.targetSize - this.size) * 0.005; }
-                draw() { ctx.beginPath(), ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2), ctx.fillStyle =
-                        `rgba(255, 255, 255, ${this.opacity})`, ctx.fill(); }
-            }
-            for (let i = 0; i < COUNT; i++) particles.push(new Particle());
-
-            let mouseX = null,
-                mouseY = null;
-            canvas.addEventListener('mousemove', e => { mouseX = e.clientX, mouseY = e.clientY; });
-            canvas.addEventListener('mouseleave', () => { mouseX = null, mouseY = null; });
-
-            function animate() {
-                ctx.clearRect(0, 0, w, h);
-                particles.forEach(p => {
-                    if (mouseX !== null && mouseY !== null) {
-                        const dx = p.x - mouseX,
-                            dy = p.y - mouseY,
-                            dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 180) { const force = (180 - dist) / 180 * 0.04;
-                            p.x += dx * force, p.y += dy * force; }
-                    }
-                    p.update(), p.draw();
-                });
-                for (let i = 0; i < particles.length; i++)
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const dx = particles[i].x - particles[j].x,
-                            dy = particles[i].y - particles[j].y,
-                            dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 140) ctx.beginPath(), ctx.moveTo(particles[i].x, particles[i].y), ctx.lineTo(particles[j].x,
-                            particles[j].y), ctx.strokeStyle = `rgba(255, 255, 255, ${0.06 * (1 - dist / 140)})`, ctx
-                            .lineWidth = 1, ctx.stroke();
-                    }
-                requestAnimationFrame(animate);
-            }
-            animate();
-        })();
-    </script>
-
-    <!-- 2. МОБИЛЬНОЕ МЕНЮ -->
+    <!-- 1. МОБИЛЬНОЕ МЕНЮ -->
     <script>
         document.getElementById('mobileToggle')?.addEventListener('click', function() {
             document.getElementById('mobileMenu').classList.toggle('open');
         });
     </script>
 
-    <!-- 3. НАВИГАЦИЯ ПРИ СКРОЛЛЕ -->
+    <!-- 2. НАВИГАЦИЯ ПРИ СКРОЛЛЕ -->
     <script>
         (function() {
             const navbar = document.getElementById('navbar');
