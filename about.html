@@ -8,211 +8,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <style>
         /* ============================================
-                   ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
-                   ============================================ */
-        :root {
-            --vandal-red: #cc0000;
-            --vandal-red-glow: rgba(204, 0, 0, 0.4);
-            --vandal-red-subtle: rgba(204, 0, 0, 0.12);
-            --vandal-dark: #0a0a0a;
-            --vandal-dark-surface: #141414;
-            --vandal-hairline: rgba(255, 255, 255, 0.06);
-            --vandal-subtle: #888888;
-            --vandal-muted: #555555;
-            --vandal-default: #eeeeee;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--vandal-dark);
-            color: var(--vandal-default);
-            overflow-x: hidden;
-            line-height: 1.7;
-            min-height: 100vh;
-        }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-        a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
-        img { display: block; max-width: 100%; }
-
-        /* ============================================
-                   СКРОЛЛБАР
-                   ============================================ */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--vandal-dark); }
-        ::-webkit-scrollbar-thumb { background: var(--vandal-red); border-radius: 10px; }
-
-        /* ============================================
-                   ФОН: ЧАСТИЦЫ
-                   ============================================ */
-        #particles-canvas {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* ============================================
-                   НАВИГАЦИЯ
-                   ============================================ */
-        .navbar {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            backdrop-filter: blur(16px);
-            background: rgba(10, 10, 10, 0.85);
-            border-bottom: 2px solid var(--vandal-red);
-            padding: 14px 0;
-            box-shadow: 0 0 40px rgba(204, 0, 0, 0.1);
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .navbar.scrolled {
-            background: rgba(10, 10, 10, 0.95);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
-        }
-        .nav-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 900;
-            font-size: 1.4rem;
-            letter-spacing: -0.02em;
-            color: #fff;
-            text-decoration: none;
-        }
-        .logo .icon {
-            font-size: 1.8rem;
-            color: var(--vandal-red);
-            filter: drop-shadow(0 0 30px var(--vandal-red-glow));
-            animation: logoPulse 2s ease-in-out infinite;
-        }
-        @keyframes logoPulse {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px var(--vandal-red-glow)); }
-            50% { transform: scale(1.15); filter: drop-shadow(0 0 60px var(--vandal-red-glow)); }
-        }
-        .logo .brand-text {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.2;
-        }
-        .logo .brand-text .name {
-            background: linear-gradient(135deg, #fff 0%, var(--vandal-red) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .logo .brand-text .sub {
-            font-size: 0.6rem;
-            color: var(--vandal-subtle);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .nav-menu {
-            display: none;
-            list-style: none;
-            gap: 32px;
-        }
-        @media(min-width:768px) { .nav-menu { display: flex; } }
-        .nav-link {
-            color: var(--vandal-subtle);
-            font-size: 0.9rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            transition: all 0.3s;
-            padding: 4px 0;
-            position: relative;
-        }
-        .nav-link:hover { color: #fff; }
-        .nav-link.active { color: var(--vandal-red); }
-        .nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--vandal-red);
-            border-radius: 2px;
-            box-shadow: 0 0 30px var(--vandal-red-glow);
-            animation: lineGlow 1.5s ease-in-out infinite;
-        }
-        @keyframes lineGlow {
-            0%, 100% { box-shadow: 0 0 20px var(--vandal-red-glow); }
-            50% { box-shadow: 0 0 60px var(--vandal-red-glow); }
-        }
-        .mobile-toggle {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 4px 8px;
-        }
-        @media(min-width:768px) { .mobile-toggle { display: none; } }
-
-        .mobile-menu {
-            display: none;
-            flex-direction: column;
-            gap: 12px;
-            padding: 20px 0;
-            background: rgba(10,10,10,0.96);
-            backdrop-filter: blur(16px);
-            border-bottom: 2px solid var(--vandal-red);
-        }
-        .mobile-menu.open { display: flex; }
-        .mobile-menu a {
-            color: var(--vandal-subtle);
-            font-size: 1rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            padding: 6px 0;
-        }
-        .mobile-menu a:hover { color: #fff; }
-        .mobile-menu a.active { color: var(--vandal-red); }
-        @media(min-width:768px) { .mobile-menu { display: none !important; } }
-
-        /* ============================================
-                   ОСНОВНОЙ КОНТЕНТ
-                   ============================================ */
-        .main-content {
-            position: relative;
-            z-index: 1;
-            padding: 120px 0 80px;
-        }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(40px) scale(0.96); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-40px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(40px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .animate-fadeUp { opacity: 0; animation: fadeUp .8s cubic-bezier(.16, 1, .3, 1) forwards; }
-        .animate-slideLeft { opacity: 0; animation: slideInLeft .8s cubic-bezier(.16, 1, .3, 1) forwards; }
-        .animate-slideRight { opacity: 0; animation: slideInRight .8s cubic-bezier(.16, 1, .3, 1) forwards; }
-        .delay-1 { animation-delay: .1s; }
-        .delay-2 { animation-delay: .2s; }
-        .delay-3 { animation-delay: .3s; }
-        .delay-4 { animation-delay: .4s; }
-
-        /* ============================================
-                   ЗАГОЛОВОК
+                   ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ ABOUT
                    ============================================ */
         .about-header {
             text-align: center;
@@ -222,8 +21,8 @@
             display: inline-block;
             padding: 6px 18px;
             border-radius: 40px;
-            background: var(--vandal-red-subtle);
-            color: var(--vandal-red);
+            background: var(--vandal-white-subtle);
+            color: var(--vandal-white);
             font-size: 0.7rem;
             font-weight: 700;
             text-transform: uppercase;
@@ -237,7 +36,7 @@
             margin-bottom: 8px;
         }
         .about-header h1 .highlight {
-            background: linear-gradient(135deg, var(--vandal-red), #ff3333);
+            background: linear-gradient(135deg, var(--vandal-white), #888);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -251,23 +50,27 @@
         }
 
         /* ============================================
-                   КАРТОЧКА С ИСТОРИЕЙ
-                   ============================================ */
+           ОСНОВНАЯ КАРТОЧКА
+           ============================================ */
         .about-card {
-            background: rgba(18, 18, 22, 0.6);
+            background: var(--vandal-dark-surface);
             backdrop-filter: blur(16px);
-            border: 2px solid var(--vandal-hairline);
+            border: 1px solid var(--vandal-hairline);
             border-radius: 28px;
             padding: 48px 40px;
             max-width: 900px;
             margin: 0 auto;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            animation: fadeUp .8s cubic-bezier(.16, 1, .3, 1) .2s forwards;
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
             opacity: 0;
         }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
         .about-card:hover {
-            border-color: var(--vandal-red);
+            border-color: var(--vandal-white);
             transform: scale(1.01);
         }
 
@@ -287,22 +90,20 @@
             position: relative;
             border-radius: 16px;
             overflow: hidden;
-            border: 2px solid var(--vandal-red);
+            border: 1px solid var(--vandal-hairline);
             background: var(--vandal-dark);
             aspect-ratio: 4/3;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 5rem;
-            color: var(--vandal-red);
-            filter: drop-shadow(0 0 40px var(--vandal-red-glow));
-            animation: slideInLeft .8s cubic-bezier(.16, 1, .3, 1) .3s forwards;
-            opacity: 0;
+            color: var(--vandal-white);
+            filter: drop-shadow(0 0 40px var(--vandal-white-glow));
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .about-card .history .image-box:hover {
             transform: scale(1.03);
-            box-shadow: 0 0 80px rgba(204, 0, 0, 0.15);
+            box-shadow: 0 0 80px rgba(255, 255, 255, 0.05);
         }
         .about-card .history .image-box .old-name {
             position: absolute;
@@ -310,31 +111,27 @@
             left: 16px;
             padding: 4px 14px;
             border-radius: 40px;
-            background: rgba(9, 9, 11, 0.85);
+            background: rgba(10, 10, 10, 0.85);
             backdrop-filter: blur(8px);
             border: 1px solid var(--vandal-hairline);
             font-size: 0.7rem;
             font-weight: 600;
-            color: var(--vandal-red);
+            color: var(--vandal-white);
             letter-spacing: 0.05em;
         }
 
-        .about-card .history .text-content {
-            animation: slideInRight .8s cubic-bezier(.16, 1, .3, 1) .4s forwards;
-            opacity: 0;
-        }
         .about-card .history .text-content .old-project {
             display: inline-block;
             padding: 4px 16px;
             border-radius: 40px;
-            background: rgba(204, 0, 0, 0.08);
-            color: var(--vandal-red);
+            background: var(--vandal-white-subtle);
+            color: var(--vandal-white);
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             margin-bottom: 12px;
-            border: 1px solid rgba(204, 0, 0, 0.15);
+            border: 1px solid var(--vandal-hairline);
         }
         .about-card .history .text-content h2 {
             font-size: 2rem;
@@ -343,7 +140,7 @@
             margin-bottom: 12px;
         }
         .about-card .history .text-content h2 .accent {
-            color: var(--vandal-red);
+            color: var(--vandal-white);
         }
         .about-card .history .text-content p {
             color: var(--vandal-subtle);
@@ -352,13 +149,13 @@
             margin-bottom: 16px;
         }
         .about-card .history .text-content .highlight {
-            color: var(--vandal-red);
+            color: var(--vandal-white);
             font-weight: 700;
         }
         .about-card .history .text-content .quote {
             padding: 16px 20px;
-            border-left: 3px solid var(--vandal-red);
-            background: var(--vandal-red-subtle);
+            border-left: 3px solid var(--vandal-white);
+            background: var(--vandal-white-subtle);
             border-radius: 12px;
             font-style: italic;
             color: var(--vandal-default);
@@ -366,87 +163,13 @@
         }
 
         /* ============================================
-                   КНОПКИ
-                   ============================================ */
+           КНОПКИ
+           ============================================ */
         .btn-group {
             display: flex;
             gap: 14px;
             flex-wrap: wrap;
-        }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 28px;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            border: none;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        .btn-primary {
-            background: var(--vandal-red);
-            color: #fff;
-            box-shadow: 0 0 30px rgba(204, 0, 0, 0.2);
-        }
-        .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 60px var(--vandal-red-glow);
-            background: #ff1a1a;
-        }
-        .btn-secondary {
-            background: rgba(255,255,255,0.06);
-            color: #fff;
-            border: 2px solid var(--vandal-hairline);
-        }
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.12);
-            transform: scale(1.05);
-            border-color: var(--vandal-red);
-        }
-
-        /* ============================================
-                   ФУТЕР
-                   ============================================ */
-        .footer {
-            padding: 48px 0 24px;
-            border-top: 2px solid var(--vandal-red);
-            background: var(--vandal-dark);
-            margin-top: 60px;
-        }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 32px;
-        }
-        @media(min-width:768px) { .footer-grid { grid-template-columns: 1fr 1fr 1fr; } }
-        .footer .heading {
-            color: #fff;
-            font-weight: 700;
-            margin-bottom: 12px;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        .footer ul { list-style: none; }
-        .footer ul li { margin-bottom: 6px; }
-        .footer ul a {
-            color: var(--vandal-subtle);
-            font-size: 0.9rem;
-            transition: color 0.3s;
-        }
-        .footer ul a:hover { color: var(--vandal-red); }
-        .footer .bottom {
-            margin-top: 32px;
-            padding-top: 16px;
-            border-top: 1px solid var(--vandal-hairline);
-            text-align: center;
-            color: var(--vandal-muted);
-            font-size: 0.85rem;
+            margin-top: 16px;
         }
 
         @media(max-width:768px) {
@@ -457,7 +180,7 @@
             .about-card { padding: 24px 16px; }
             .about-header h1 { font-size: 1.8rem; }
             .btn-group { flex-direction: column; align-items: center; }
-            .btn { width: 100%; justify-content: center; }
+            .btn-group .btn { width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -479,7 +202,7 @@
             <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link">Главная</a></li>
                 <li><a href="about.html" class="nav-link active">О группе</a></li>
-                <li><a href="music.html" class="nav-link">Музыка</a></li>
+                <li><a href="releases.html" class="nav-link">Релизы</a></li>
                 <li><a href="contact.html" class="nav-link">Контакты</a></li>
             </ul>
             <button class="mobile-toggle" id="mobileToggle">☰</button>
@@ -491,17 +214,18 @@
         <div class="container" style="display:flex;flex-direction:column;gap:12px;">
             <a href="index.html">Главная</a>
             <a href="about.html" class="active">О группе</a>
-            <a href="music.html">Музыка</a>
+            <a href="releases.html">Релизы</a>
             <a href="contact.html">Контакты</a>
         </div>
     </div>
 
     <!-- ===== ОСНОВНОЙ КОНТЕНТ ===== -->
-    <main class="main-content">
+    <main style="position:relative;z-index:1;padding:120px 0 80px;">
+
         <div class="container">
 
             <!-- ЗАГОЛОВОК -->
-            <header class="about-header animate-fadeUp">
+            <header class="about-header">
                 <span class="badge">🔥 История</span>
                 <h1>
                     <span class="highlight">VANDAL</span> METAL
@@ -555,6 +279,7 @@
             </div>
 
         </div>
+
     </main>
 
     <!-- ===== ФУТЕР ===== -->
@@ -575,7 +300,7 @@
                     <ul>
                         <li><a href="index.html">Главная</a></li>
                         <li><a href="about.html">О группе</a></li>
-                        <li><a href="music.html">Музыка</a></li>
+                        <li><a href="releases.html">Релизы</a></li>
                         <li><a href="contact.html">Контакты</a></li>
                     </ul>
                 </div>
@@ -611,12 +336,12 @@
             class Particle {
                 constructor() { this.reset(); }
                 reset() { this.x = Math.random() * w, this.y = Math.random() * h, this.size = Math.random() * 3 + 0.5, this.speedX = (Math
-                        .random() - .5) * 0.6, this.speedY = (Math.random() - .5) * 0.6, this.opacity = Math.random() * 0.5 +
-                        0.15, this.targetSize = this.size * (Math.random() * 2 + 0.5); }
+                        .random() - .5) * 0.6, this.speedY = (Math.random() - .5) * 0.6, this.opacity = Math.random() * 0.4 +
+                        0.1, this.targetSize = this.size * (Math.random() * 2 + 0.5); }
                 update() { this.x += this.speedX, this.y += this.speedY, (this.x < 0 || this.x > w) && (this.speedX *= -1), (this
                         .y < 0 || this.y > h) && (this.speedY *= -1), this.size += (this.targetSize - this.size) * 0.005; }
                 draw() { ctx.beginPath(), ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2), ctx.fillStyle =
-                        `rgba(204, 0, 0, ${this.opacity})`, ctx.fill(); }
+                        `rgba(255, 255, 255, ${this.opacity})`, ctx.fill(); }
             }
             for (let i = 0; i < COUNT; i++) particles.push(new Particle());
 
@@ -643,7 +368,7 @@
                             dy = particles[i].y - particles[j].y,
                             dist = Math.sqrt(dx * dx + dy * dy);
                         if (dist < 140) ctx.beginPath(), ctx.moveTo(particles[i].x, particles[i].y), ctx.lineTo(particles[j].x,
-                            particles[j].y), ctx.strokeStyle = `rgba(204, 0, 0, ${0.08 * (1 - dist / 140)})`, ctx
+                            particles[j].y), ctx.strokeStyle = `rgba(255, 255, 255, ${0.06 * (1 - dist / 140)})`, ctx
                             .lineWidth = 1, ctx.stroke();
                     }
                 requestAnimationFrame(animate);
