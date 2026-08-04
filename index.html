@@ -452,6 +452,7 @@
             line-height: 1.9;
         }
 
+        /* ===== ГАЛЕРЕЯ / ИЗОБРАЖЕНИЕ ===== */
         .hero-image {
             position: relative;
             border-radius: 20px;
@@ -465,6 +466,7 @@
             justify-content: center;
             animation: heroFloat 6s ease-in-out infinite;
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
         }
         .hero-image:hover {
             transform: scale(1.02);
@@ -490,6 +492,94 @@
         }
         .hero-image:hover img {
             transform: scale(1.04);
+        }
+
+        /* ===== МОДАЛЬНОЕ ОКНО ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(12px);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            padding: 40px;
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-overlay.open .modal-content {
+            transform: scale(1) rotate(0deg);
+            opacity: 1;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            background: var(--surface);
+            border-radius: 16px;
+            border: 2px solid var(--white);
+            box-shadow: 0 0 80px var(--glow-strong);
+            overflow: hidden;
+            transform: scale(0.7) rotate(-6deg);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+            animation: modalPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        @keyframes modalPop {
+            0% {
+                transform: scale(0.5) rotate(-12deg);
+                opacity: 0;
+            }
+            60% {
+                transform: scale(1.05) rotate(2deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+        .modal-content img {
+            display: block;
+            max-width: 100%;
+            max-height: 85vh;
+            object-fit: contain;
+            padding: 8px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: rgba(0, 0, 0, 0.7);
+            border: none;
+            color: #fff;
+            font-size: 2.2rem;
+            font-weight: 300;
+            cursor: pointer;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 10;
+            line-height: 1;
+        }
+        .modal-close:hover {
+            background: rgba(255, 0, 0, 0.8);
+            transform: scale(1.2) rotate(90deg);
+            border-color: #fff;
         }
 
         /* ===== КНОПКИ ===== */
@@ -804,6 +894,17 @@
             .hero-content .subtitle {
                 font-size: 1.2rem;
             }
+            .modal-content {
+                max-width: 95vw;
+                max-height: 85vh;
+            }
+            .modal-close {
+                top: 8px;
+                right: 8px;
+                width: 40px;
+                height: 40px;
+                font-size: 1.8rem;
+            }
         }
         @media (max-width: 480px) {
             .hero-content h1 {
@@ -887,13 +988,20 @@
                         <a href="https://t.me/VANDALMETAL" target="_blank" class="btn btn-secondary">📲 Telegram</a>
                     </div>
                 </div>
-                <div class="hero-image">
-                    <!-- Замените src на путь к вашему изображению -->
-                    <img src="https://via.placeholder.com/800x600/222/fff?text=VANDAL+METAL" alt="VANDAL METAL" loading="lazy" />
+                <div class="hero-image" id="galleryTrigger">
+                    <img src="https://raw.githubusercontent.com/drakoniks155/vandal-metal/main/images/IMG_20260803_020258_570.jpg" alt="VANDAL METAL" loading="lazy" />
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО ===== -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">✕</button>
+            <img src="https://raw.githubusercontent.com/drakoniks155/vandal-metal/main/images/IMG_20260803_020258_570.jpg" alt="VANDAL METAL — полноэкранный режим" />
+        </div>
+    </div>
 
     <!-- ===== О ГРУППЕ ===== -->
     <section class="about-section" id="about">
@@ -1095,7 +1203,43 @@
         })();
     </script>
 
-    <!-- 3. НАВИГАЦИЯ: СКРОЛЛ И МОБИЛЬНОЕ МЕНЮ -->
+    <!-- 3. ГАЛЕРЕЯ: МОДАЛЬНОЕ ОКНО -->
+    <script>
+        (function() {
+            const trigger = document.getElementById('galleryTrigger');
+            const overlay = document.getElementById('modalOverlay');
+            const closeBtn = document.getElementById('modalClose');
+
+            function openModal() {
+                overlay.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal() {
+                overlay.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+
+            trigger.addEventListener('click', openModal);
+            closeBtn.addEventListener('click', closeModal);
+
+            // Закрытие по клику вне изображения
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    closeModal();
+                }
+            });
+
+            // Закрытие по Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && overlay.classList.contains('open')) {
+                    closeModal();
+                }
+            });
+        })();
+    </script>
+
+    <!-- 4. НАВИГАЦИЯ: СКРОЛЛ И МОБИЛЬНОЕ МЕНЮ -->
     <script>
         (function() {
             const navbar = document.getElementById('navbar');
@@ -1114,7 +1258,6 @@
                 mobileMenu.classList.toggle('open');
             });
 
-            // Закрываем меню при клике на ссылку
             document.querySelectorAll('.mobile-menu a').forEach(link => {
                 link.addEventListener('click', () => {
                     mobileMenu.classList.remove('open');
