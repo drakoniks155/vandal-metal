@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" data-mode="dark">
+<html lang="ru" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,27 +22,70 @@
             --vandal-subtle: #888888;
             --vandal-muted: #555555;
             --vandal-default: #eeeeee;
+            --vandal-bg: #0a0a0a;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+
+        /* ============================================
+                   СВЕТЛАЯ ТЕМА
+                   ============================================ */
+        html[data-theme="light"] {
+            --vandal-white: #0a0a0a;
+            --vandal-white-glow: rgba(0, 0, 0, 0.1);
+            --vandal-white-subtle: rgba(0, 0, 0, 0.06);
+            --vandal-dark: #f4f4f5;
+            --vandal-dark-surface: #ffffff;
+            --vandal-hairline: rgba(0, 0, 0, 0.08);
+            --vandal-subtle: #52525b;
+            --vandal-muted: #71717a;
+            --vandal-default: #18181b;
+            --vandal-bg: #f4f4f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--vandal-dark);
+            background: var(--vandal-bg);
             color: var(--vandal-default);
             overflow-x: hidden;
             line-height: 1.7;
             min-height: 100vh;
+            transition: background 0.4s ease, color 0.4s ease;
         }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-        a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
-        img { display: block; max-width: 100%; }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+        img {
+            display: block;
+            max-width: 100%;
+        }
 
         /* ============================================
                    СКРОЛЛБАР
                    ============================================ */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--vandal-dark); }
-        ::-webkit-scrollbar-thumb { background: var(--vandal-white); border-radius: 10px; }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--vandal-bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--vandal-subtle);
+            border-radius: 10px;
+        }
 
         /* ============================================
                    ФОН: ЧАСТИЦЫ
@@ -67,15 +110,23 @@
             padding: 14px 0;
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
+        html[data-theme="light"] .navbar {
+            background: rgba(255, 255, 255, 0.85);
+        }
         .navbar.scrolled {
             background: rgba(10, 10, 10, 0.95);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+        }
+        html[data-theme="light"] .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95);
         }
         .nav-container {
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
+
+        /* ===== ЛОГОТИП ===== */
         .logo {
             display: flex;
             align-items: center;
@@ -83,7 +134,7 @@
             font-weight: 900;
             font-size: 1.4rem;
             letter-spacing: -0.02em;
-            color: #fff;
+            color: var(--vandal-white);
             text-decoration: none;
         }
         .logo .icon {
@@ -93,8 +144,15 @@
             animation: logoPulse 2s ease-in-out infinite;
         }
         @keyframes logoPulse {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px var(--vandal-white-glow)); }
-            50% { transform: scale(1.15); filter: drop-shadow(0 0 60px var(--vandal-white-glow)); }
+            0%,
+            100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 20px var(--vandal-white-glow));
+            }
+            50% {
+                transform: scale(1.15);
+                filter: drop-shadow(0 0 60px var(--vandal-white-glow));
+            }
         }
         .logo .brand-text {
             display: flex;
@@ -102,7 +160,7 @@
             line-height: 1.2;
         }
         .logo .brand-text .name {
-            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+            background: linear-gradient(135deg, var(--vandal-white) 0%, var(--vandal-subtle) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -114,12 +172,17 @@
             letter-spacing: 0.1em;
         }
 
+        /* ===== МЕНЮ ===== */
         .nav-menu {
             display: none;
             list-style: none;
             gap: 32px;
         }
-        @media(min-width:768px) { .nav-menu { display: flex; } }
+        @media(min-width:768px) {
+            .nav-menu {
+                display: flex;
+            }
+        }
         .nav-link {
             color: var(--vandal-subtle);
             font-size: 0.9rem;
@@ -130,8 +193,12 @@
             padding: 4px 0;
             position: relative;
         }
-        .nav-link:hover { color: #fff; }
-        .nav-link.active { color: var(--vandal-white); }
+        .nav-link:hover {
+            color: var(--vandal-white);
+        }
+        .nav-link.active {
+            color: var(--vandal-white);
+        }
         .nav-link.active::after {
             content: '';
             position: absolute;
@@ -145,29 +212,76 @@
             animation: lineGlow 1.5s ease-in-out infinite;
         }
         @keyframes lineGlow {
-            0%, 100% { box-shadow: 0 0 20px var(--vandal-white-glow); }
-            50% { box-shadow: 0 0 60px var(--vandal-white-glow); }
+            0%,
+            100% {
+                box-shadow: 0 0 20px var(--vandal-white-glow);
+            }
+            50% {
+                box-shadow: 0 0 60px var(--vandal-white-glow);
+            }
         }
+
+        /* ===== ТЕМА-ТОГГЛ ===== */
+        .theme-toggle {
+            background: var(--vandal-dark-surface);
+            border: 1px solid var(--vandal-hairline);
+            border-radius: 40px;
+            padding: 6px 14px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--vandal-white);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .theme-toggle:hover {
+            transform: scale(1.05);
+            border-color: var(--vandal-white);
+        }
+        .theme-toggle .theme-label {
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--vandal-subtle);
+        }
+        @media (max-width: 480px) {
+            .theme-toggle .theme-label {
+                display: none;
+            }
+        }
+
+        /* ===== МОБИЛЬНОЕ МЕНЮ ===== */
         .mobile-toggle {
             background: none;
             border: none;
-            color: #fff;
+            color: var(--vandal-white);
             font-size: 1.5rem;
             cursor: pointer;
             padding: 4px 8px;
         }
-        @media(min-width:768px) { .mobile-toggle { display: none; } }
+        @media(min-width:768px) {
+            .mobile-toggle {
+                display: none;
+            }
+        }
 
         .mobile-menu {
             display: none;
             flex-direction: column;
             gap: 12px;
             padding: 20px 0;
-            background: rgba(10,10,10,0.96);
+            background: rgba(10, 10, 10, 0.96);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--vandal-hairline);
         }
-        .mobile-menu.open { display: flex; }
+        html[data-theme="light"] .mobile-menu {
+            background: rgba(255, 255, 255, 0.96);
+        }
+        .mobile-menu.open {
+            display: flex;
+        }
         .mobile-menu a {
             color: var(--vandal-subtle);
             font-size: 1rem;
@@ -176,9 +290,17 @@
             letter-spacing: 0.08em;
             padding: 6px 0;
         }
-        .mobile-menu a:hover { color: #fff; }
-        .mobile-menu a.active { color: var(--vandal-white); }
-        @media(min-width:768px) { .mobile-menu { display: none !important; } }
+        .mobile-menu a:hover {
+            color: var(--vandal-white);
+        }
+        .mobile-menu a.active {
+            color: var(--vandal-white);
+        }
+        @media(min-width:768px) {
+            .mobile-menu {
+                display: none !important;
+            }
+        }
 
         /* ============================================
                    ОСНОВНОЙ КОНТЕНТ
@@ -190,18 +312,40 @@
         }
 
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(40px) scale(0.96); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
         @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-30px); }
-            to { opacity: 1; transform: translateX(0); }
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
-        .animate-fadeUp { opacity: 0; animation: fadeUp .8s cubic-bezier(.16, 1, .3, 1) forwards; }
-        .animate-slideLeft { opacity: 0; animation: slideInLeft .7s cubic-bezier(.16, 1, .3, 1) forwards; }
-        .delay-1 { animation-delay: .1s; }
-        .delay-2 { animation-delay: .2s; }
+        .animate-fadeUp {
+            opacity: 0;
+            animation: fadeUp .8s cubic-bezier(.16, 1, .3, 1) forwards;
+        }
+        .animate-slideLeft {
+            opacity: 0;
+            animation: slideInLeft .7s cubic-bezier(.16, 1, .3, 1) forwards;
+        }
+        .delay-1 {
+            animation-delay: .1s;
+        }
+        .delay-2 {
+            animation-delay: .2s;
+        }
 
         /* ============================================
                    ЗАГОЛОВОК
@@ -229,12 +373,16 @@
             margin-bottom: 8px;
         }
         .contact-header h1 .highlight {
-            background: linear-gradient(135deg, var(--vandal-white), #888);
+            background: linear-gradient(135deg, var(--vandal-white), var(--vandal-subtle));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        @media(max-width:768px) { .contact-header h1 { font-size: 2.4rem; } }
+        @media(max-width:768px) {
+            .contact-header h1 {
+                font-size: 2.4rem;
+            }
+        }
         .contact-header p {
             color: var(--vandal-subtle);
             font-size: 1.1rem;
@@ -252,7 +400,11 @@
             max-width: 700px;
             margin: 0 auto 40px;
         }
-        @media(min-width:768px) { .contact-grid { grid-template-columns: 1fr 1fr; } }
+        @media(min-width:768px) {
+            .contact-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
 
         .contact-card {
             background: var(--vandal-dark-surface);
@@ -266,13 +418,17 @@
             transform: translateY(30px);
             animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-        .contact-card:nth-child(1) { animation-delay: 0.1s; }
-        .contact-card:nth-child(2) { animation-delay: 0.25s; }
+        .contact-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+        .contact-card:nth-child(2) {
+            animation-delay: 0.25s;
+        }
 
         .contact-card:hover {
             border-color: var(--vandal-white);
             transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 60px rgba(255,255,255,0.03);
+            box-shadow: 0 20px 60px var(--vandal-white-glow);
         }
         .contact-card .icon {
             font-size: 2.8rem;
@@ -286,7 +442,7 @@
         .contact-card h3 {
             font-size: 1rem;
             font-weight: 700;
-            color: #fff;
+            color: var(--vandal-white);
             margin-bottom: 4px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -328,18 +484,23 @@
             cursor: pointer;
             text-decoration: none;
             background: var(--vandal-white);
-            color: #0a0a0c;
+            color: var(--vandal-bg);
             box-shadow: 0 0 40px var(--vandal-white-glow);
             animation: btnPulse 2.5s ease-in-out infinite;
         }
         .subscribe-section .btn:hover {
             transform: scale(1.08);
             box-shadow: 0 0 100px var(--vandal-white-glow);
-            background: #ddd;
+            opacity: 0.85;
         }
         @keyframes btnPulse {
-            0%, 100% { box-shadow: 0 0 30px var(--vandal-white-glow); }
-            50% { box-shadow: 0 0 80px var(--vandal-white-glow); }
+            0%,
+            100% {
+                box-shadow: 0 0 30px var(--vandal-white-glow);
+            }
+            50% {
+                box-shadow: 0 0 80px var(--vandal-white-glow);
+            }
         }
 
         /* ============================================
@@ -369,23 +530,29 @@
         }
         .btn-primary {
             background: var(--vandal-white);
-            color: #0a0a0c;
+            color: var(--vandal-bg);
             box-shadow: 0 0 30px var(--vandal-white-glow);
         }
         .btn-primary:hover {
             transform: scale(1.05);
             box-shadow: 0 0 60px var(--vandal-white-glow);
-            background: #ddd;
+            opacity: 0.85;
         }
         .btn-secondary {
-            background: rgba(255,255,255,0.06);
-            color: #fff;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--vandal-white);
             border: 1px solid var(--vandal-hairline);
         }
         .btn-secondary:hover {
-            background: rgba(255,255,255,0.12);
+            background: rgba(255, 255, 255, 0.12);
             transform: scale(1.05);
             border-color: var(--vandal-white);
+        }
+        html[data-theme="light"] .btn-secondary {
+            background: rgba(0, 0, 0, 0.04);
+        }
+        html[data-theme="light"] .btn-secondary:hover {
+            background: rgba(0, 0, 0, 0.08);
         }
 
         /* ============================================
@@ -394,31 +561,42 @@
         .footer {
             padding: 48px 0 24px;
             border-top: 1px solid var(--vandal-hairline);
-            background: var(--vandal-dark);
+            background: var(--vandal-bg);
             margin-top: 60px;
+            transition: background 0.4s ease, border-color 0.4s ease;
         }
         .footer-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 32px;
         }
-        @media(min-width:768px) { .footer-grid { grid-template-columns: 1fr 1fr 1fr; } }
+        @media(min-width:768px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
         .footer .heading {
-            color: #fff;
+            color: var(--vandal-white);
             font-weight: 700;
             margin-bottom: 12px;
             font-size: 1rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
-        .footer ul { list-style: none; }
-        .footer ul li { margin-bottom: 6px; }
+        .footer ul {
+            list-style: none;
+        }
+        .footer ul li {
+            margin-bottom: 6px;
+        }
         .footer ul a {
             color: var(--vandal-subtle);
             font-size: 0.9rem;
             transition: color 0.3s;
         }
-        .footer ul a:hover { color: var(--vandal-white); }
+        .footer ul a:hover {
+            color: var(--vandal-white);
+        }
         .footer .bottom {
             margin-top: 32px;
             padding-top: 16px;
@@ -429,12 +607,22 @@
         }
 
         @media(max-width:768px) {
-            .contact-header h1 { font-size: 2rem; }
+            .contact-header h1 {
+                font-size: 2rem;
+            }
         }
         @media(max-width:480px) {
-            .contact-header h1 { font-size: 1.8rem; }
-            .btn-group { flex-direction: column; align-items: center; }
-            .btn { width: 100%; justify-content: center; }
+            .contact-header h1 {
+                font-size: 1.8rem;
+            }
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -459,6 +647,10 @@
                 <li><a href="releases.html" class="nav-link">Релизы</a></li>
                 <li><a href="contact.html" class="nav-link active">Контакты</a></li>
             </ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+                <span id="themeIcon">🌙</span>
+                <span class="theme-label" id="themeLabel">Тёмная</span>
+            </button>
             <button class="mobile-toggle" id="mobileToggle">☰</button>
         </div>
     </nav>
@@ -526,7 +718,7 @@
                     <a href="index.html" class="logo" style="gap:10px;font-size:1rem;">
                         <span class="icon" style="font-size:1.4rem;">⚡</span>
                         <div>
-                            <span style="font-weight:800;color:#fff;">VANDAL METAL</span>
+                            <span style="font-weight:800;color:var(--vandal-white);">VANDAL METAL</span>
                             <span style="display:block;font-size:0.6rem;color:var(--vandal-subtle);">Рок-метал группа</span>
                         </div>
                     </a>
@@ -556,7 +748,44 @@
     СКРИПТЫ
     ============================================ -->
 
-    <!-- 1. ЧАСТИЦЫ -->
+    <!-- 1. ПЕРЕКЛЮЧАТЕЛЬ ТЕМ -->
+    <script>
+        (function() {
+            const toggle = document.getElementById('themeToggle');
+            const icon = document.getElementById('themeIcon');
+            const label = document.getElementById('themeLabel');
+            const html = document.documentElement;
+
+            const saved = localStorage.getItem('vandal-theme');
+            if (saved) {
+                html.setAttribute('data-theme', saved);
+                updateUI(saved);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                html.setAttribute('data-theme', 'light');
+                updateUI('light');
+            }
+
+            toggle.addEventListener('click', () => {
+                const current = html.getAttribute('data-theme');
+                const next = current === 'dark' ? 'light' : 'dark';
+                html.setAttribute('data-theme', next);
+                localStorage.setItem('vandal-theme', next);
+                updateUI(next);
+            });
+
+            function updateUI(theme) {
+                if (theme === 'dark') {
+                    icon.textContent = '🌙';
+                    label.textContent = 'Тёмная';
+                } else {
+                    icon.textContent = '☀️';
+                    label.textContent = 'Светлая';
+                }
+            }
+        })();
+    </script>
+
+    <!-- 2. ЧАСТИЦЫ -->
     <script>
         (function() {
             const canvas = document.getElementById('particles-canvas');
@@ -565,26 +794,46 @@
             let w, h, particles = [],
                 COUNT = 80;
 
-            function resize() { w = canvas.width = window.innerWidth, h = canvas.height = window.innerHeight; }
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+            }
             window.addEventListener('resize', resize);
             resize();
 
             class Particle {
                 constructor() { this.reset(); }
-                reset() { this.x = Math.random() * w, this.y = Math.random() * h, this.size = Math.random() * 3 + 0.5, this.speedX = (Math
-                        .random() - .5) * 0.6, this.speedY = (Math.random() - .5) * 0.6, this.opacity = Math.random() * 0.4 +
-                        0.1, this.targetSize = this.size * (Math.random() * 2 + 0.5); }
-                update() { this.x += this.speedX, this.y += this.speedY, (this.x < 0 || this.x > w) && (this.speedX *= -1), (this
-                        .y < 0 || this.y > h) && (this.speedY *= -1), this.size += (this.targetSize - this.size) * 0.005; }
-                draw() { ctx.beginPath(), ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2), ctx.fillStyle =
-                        `rgba(255, 255, 255, ${this.opacity})`, ctx.fill(); }
+                reset() {
+                    this.x = Math.random() * w;
+                    this.y = Math.random() * h;
+                    this.size = Math.random() * 3 + 0.5;
+                    this.speedX = (Math.random() - .5) * 0.6;
+                    this.speedY = (Math.random() - .5) * 0.6;
+                    this.opacity = Math.random() * 0.4 + 0.1;
+                    this.targetSize = this.size * (Math.random() * 2 + 0.5);
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    if (this.x < 0 || this.x > w) this.speedX *= -1;
+                    if (this.y < 0 || this.y > h) this.speedY *= -1;
+                    this.size += (this.targetSize - this.size) * 0.005;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                    ctx.fill();
+                }
             }
             for (let i = 0; i < COUNT; i++) particles.push(new Particle());
 
             let mouseX = null,
                 mouseY = null;
-            canvas.addEventListener('mousemove', e => { mouseX = e.clientX, mouseY = e.clientY; });
-            canvas.addEventListener('mouseleave', () => { mouseX = null, mouseY = null; });
+            canvas.addEventListener('mousemove', e => { mouseX = e.clientX;
+                mouseY = e.clientY; });
+            canvas.addEventListener('mouseleave', () => { mouseX = null;
+                mouseY = null; });
 
             function animate() {
                 ctx.clearRect(0, 0, w, h);
@@ -593,19 +842,28 @@
                         const dx = p.x - mouseX,
                             dy = p.y - mouseY,
                             dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 180) { const force = (180 - dist) / 180 * 0.04;
-                            p.x += dx * force, p.y += dy * force; }
+                        if (dist < 180) {
+                            const force = (180 - dist) / 180 * 0.04;
+                            p.x += dx * force;
+                            p.y += dy * force;
+                        }
                     }
-                    p.update(), p.draw();
+                    p.update();
+                    p.draw();
                 });
                 for (let i = 0; i < particles.length; i++)
                     for (let j = i + 1; j < particles.length; j++) {
                         const dx = particles[i].x - particles[j].x,
                             dy = particles[i].y - particles[j].y,
                             dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 140) ctx.beginPath(), ctx.moveTo(particles[i].x, particles[i].y), ctx.lineTo(particles[j].x,
-                            particles[j].y), ctx.strokeStyle = `rgba(255, 255, 255, ${0.06 * (1 - dist / 140)})`, ctx
-                            .lineWidth = 1, ctx.stroke();
+                        if (dist < 140) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(255, 255, 255, ${0.06 * (1 - dist / 140)})`;
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                        }
                     }
                 requestAnimationFrame(animate);
             }
@@ -613,14 +871,14 @@
         })();
     </script>
 
-    <!-- 2. МОБИЛЬНОЕ МЕНЮ -->
+    <!-- 3. МОБИЛЬНОЕ МЕНЮ -->
     <script>
         document.getElementById('mobileToggle')?.addEventListener('click', function() {
             document.getElementById('mobileMenu').classList.toggle('open');
         });
     </script>
 
-    <!-- 3. НАВИГАЦИЯ ПРИ СКРОЛЛЕ -->
+    <!-- 4. НАВИГАЦИЯ ПРИ СКРОЛЛЕ -->
     <script>
         (function() {
             const navbar = document.getElementById('navbar');
