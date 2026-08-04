@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
+    </script>
     <style>
         /* ============================================
                    ПЕРЕМЕННЫЕ
@@ -25,6 +27,8 @@
             --shadow: rgba(0, 0, 0, 0.6);
             --vk: #4c75a3;
             --yandex: #ffcc00;
+            --online: #22c55e;
+            --offline: #ef4444;
         }
 
         html[data-theme="light"] {
@@ -59,6 +63,7 @@
             line-height: 1.7;
             min-height: 100vh;
             transition: background 0.5s ease, color 0.5s ease;
+            padding-top: 0;
         }
         .container {
             max-width: 1200px;
@@ -97,6 +102,169 @@
             inset: 0;
             pointer-events: none;
             z-index: 0;
+        }
+
+        /* ============================================
+                   ВЕРХНЕЕ УВЕДОМЛЕНИЕ "САЙТ В РЕМОНТЕ"
+                   ============================================ */
+        .top-notification {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: linear-gradient(135deg, #7c3aed, #2563eb);
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            transform: translateY(-100%);
+            animation: notifSlideDown 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards;
+            box-shadow: 0 4px 30px rgba(124, 58, 237, 0.4);
+            flex-wrap: wrap;
+        }
+        .top-notification.hidden {
+            display: none;
+        }
+        @keyframes notifSlideDown {
+            0% {
+                transform: translateY(-100%) scale(0.95);
+                opacity: 0;
+            }
+            60% {
+                transform: translateY(8px) scale(1.02);
+                opacity: 1;
+            }
+            80% {
+                transform: translateY(-4px) scale(0.99);
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .top-notification .notif-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        .top-notification .notif-content .icon {
+            font-size: 1.5rem;
+            animation: notifIconWiggle 2s ease-in-out infinite;
+        }
+        @keyframes notifIconWiggle {
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(-8deg);
+            }
+            75% {
+                transform: rotate(8deg);
+            }
+        }
+        .top-notification .notif-content strong {
+            font-weight: 800;
+        }
+        .top-notification .notif-close-top {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            font-weight: 300;
+            line-height: 1;
+        }
+        .top-notification .notif-close-top:hover {
+            background: rgba(255, 0, 0, 0.6);
+            transform: scale(1.1) rotate(90deg);
+        }
+
+        /* ============================================
+                   УВЕДОМЛЕНИЕ "СТАТУС ИНТЕРНЕТА"
+                   ============================================ */
+        .internet-notification {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9998;
+            padding: 14px 24px;
+            border-radius: 16px;
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 40px var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transform: translateX(120%);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease, border-color 0.3s ease;
+            background: var(--surface);
+            color: var(--text);
+            border-color: var(--border);
+        }
+        .internet-notification.show {
+            transform: translateX(0);
+        }
+        .internet-notification .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            animation: dotPulse 1.5s ease-in-out infinite;
+        }
+        .internet-notification .status-dot.online {
+            background: var(--online);
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+        }
+        .internet-notification .status-dot.offline {
+            background: var(--offline);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+        }
+        @keyframes dotPulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.3);
+            }
+        }
+        .internet-notification .status-text {
+            font-weight: 700;
+        }
+        .internet-notification .status-text.online {
+            color: var(--online);
+        }
+        .internet-notification .status-text.offline {
+            color: var(--offline);
+        }
+        .internet-notification .status-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            transition: color 0.3s ease;
+            font-weight: 300;
+        }
+        .internet-notification .status-close:hover {
+            color: var(--white);
         }
 
         /* ============================================
@@ -480,7 +648,7 @@
         }
 
         /* ============================================
-                   УВЕДОМЛЕНИЕ "НЕДОСТУПНО"
+                   УВЕДОМЛЕНИЕ "НЕДОСТУПНО" (модальное)
                    ============================================ */
         .notification-overlay {
             position: fixed;
@@ -795,21 +963,6 @@
             transform: scale(0.7) rotate(-6deg);
             opacity: 0;
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
-            animation: modalPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-        @keyframes modalPop {
-            0% {
-                transform: scale(0.5) rotate(-12deg);
-                opacity: 0;
-            }
-            60% {
-                transform: scale(1.05) rotate(2deg);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1) rotate(0deg);
-                opacity: 1;
-            }
         }
         .modal-content img {
             display: block;
@@ -1099,26 +1252,23 @@
         .qr-wrapper {
             text-align: center;
         }
-        .qr-code {
-            width: 120px;
-            height: 120px;
+        .qr-wrapper #qrcode {
+            display: inline-block;
+            background: #fff;
+            padding: 8px;
             border-radius: 12px;
             border: 2px solid var(--border);
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            background: #fff;
-            padding: 8px;
-            display: inline-block;
         }
-        .qr-code:hover {
+        .qr-wrapper #qrcode:hover {
             transform: scale(1.08) rotate(-2deg);
             box-shadow: 0 0 40px var(--glow-strong);
             border-color: var(--white);
         }
-        @media (max-width: 768px) {
-            .qr-code {
-                width: 100px;
-                height: 100px;
-            }
+        .qr-wrapper p {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            margin-top: 6px;
         }
 
         /* ============================================
@@ -1219,6 +1369,19 @@
             .notification-box .notif-title {
                 font-size: 1.8rem;
             }
+            .top-notification {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+            .top-notification .notif-content .icon {
+                font-size: 1.2rem;
+            }
+            .internet-notification {
+                bottom: 16px;
+                right: 16px;
+                padding: 12px 18px;
+                font-size: 0.8rem;
+            }
         }
         @media (max-width: 480px) {
             .hero-content h1 {
@@ -1256,10 +1419,46 @@
                 grid-template-columns: 1fr 1fr;
                 gap: 24px;
             }
+            .top-notification .notif-content {
+                font-size: 0.8rem;
+            }
+            .internet-notification {
+                bottom: 12px;
+                right: 12px;
+                padding: 10px 14px;
+                font-size: 0.75rem;
+                border-radius: 12px;
+            }
+            .internet-notification .status-dot {
+                width: 10px;
+                height: 10px;
+            }
         }
     </style>
 </head>
 <body>
+
+    <!-- ============================================
+    ВЕРХНЕЕ УВЕДОМЛЕНИЕ "САЙТ В РЕМОНТЕ"
+    ============================================ -->
+    <div class="top-notification" id="topNotification">
+        <div class="notif-content">
+            <span class="icon">🚧</span>
+            <span>
+                <strong>Сайт в разработке!</strong> Мы активно работаем над новым дизайном и контентом. Скоро здесь будет жарко! 🔥
+            </span>
+        </div>
+        <button class="notif-close-top" id="topNotifClose" aria-label="Закрыть уведомление">✕</button>
+    </div>
+
+    <!-- ============================================
+    УВЕДОМЛЕНИЕ "СТАТУС ИНТЕРНЕТА"
+    ============================================ -->
+    <div class="internet-notification" id="internetNotif">
+        <span class="status-dot" id="statusDot"></span>
+        <span class="status-text" id="statusText">Подключение...</span>
+        <button class="status-close" id="internetNotifClose" aria-label="Закрыть уведомление">✕</button>
+    </div>
 
     <!-- ===== ФОН: ЧАСТИЦЫ ===== -->
     <canvas id="particles-canvas"></canvas>
@@ -1335,7 +1534,7 @@
         </div>
     </div>
 
-    <!-- ===== УВЕДОМЛЕНИЕ "НЕДОСТУПНО" ===== -->
+    <!-- ===== УВЕДОМЛЕНИЕ "НЕДОСТУПНО" (модальное) ===== -->
     <div class="notification-overlay" id="notificationOverlay">
         <div class="notification-box">
             <span class="notif-icon">🚫</span>
@@ -1477,15 +1676,8 @@
                 <div>
                     <h4 class="heading">📱 QR-код</h4>
                     <div class="qr-wrapper">
-                        <img 
-                            src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://drakoniks155.github.io/vandal-metal/" 
-                            alt="QR-код VANDAL METAL" 
-                            class="qr-code"
-                            loading="lazy"
-                        />
-                        <p style="color:var(--text-muted);font-size:0.75rem;margin-top:6px;">
-                            Отсканируйте для быстрого перехода
-                        </p>
+                        <div id="qrcode"></div>
+                        <p>Отсканируйте для быстрого перехода</p>
                     </div>
                 </div>
             </div>
@@ -1568,7 +1760,24 @@
         })();
     </script>
 
-    <!-- 2. ПЕРЕКЛЮЧАТЕЛЬ ТЕМ -->
+    <!-- 2. QR-КОД -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const qrContainer = document.getElementById('qrcode');
+            if (qrContainer) {
+                new QRCode(qrContainer, {
+                    text: 'https://drakoniks155.github.io/vandal-metal/',
+                    width: 120,
+                    height: 120,
+                    colorDark: '#000000',
+                    colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            }
+        });
+    </script>
+
+    <!-- 3. ПЕРЕКЛЮЧАТЕЛЬ ТЕМ -->
     <script>
         (function() {
             const toggle = document.getElementById('themeToggle');
@@ -1605,7 +1814,95 @@
         })();
     </script>
 
-    <!-- 3. УВЕДОМЛЕНИЕ "НЕДОСТУПНО" -->
+    <!-- 4. ВЕРХНЕЕ УВЕДОМЛЕНИЕ "САЙТ В РЕМОНТЕ" -->
+    <script>
+        (function() {
+            const notif = document.getElementById('topNotification');
+            const closeBtn = document.getElementById('topNotifClose');
+
+            // Проверяем, скрыто ли уведомление ранее
+            if (localStorage.getItem('topNotifClosed') === 'true') {
+                notif.classList.add('hidden');
+            }
+
+            closeBtn.addEventListener('click', function() {
+                notif.classList.add('hidden');
+                localStorage.setItem('topNotifClosed', 'true');
+            });
+        })();
+    </script>
+
+    <!-- 5. УВЕДОМЛЕНИЕ "СТАТУС ИНТЕРНЕТА" -->
+    <script>
+        (function() {
+            const notif = document.getElementById('internetNotif');
+            const dot = document.getElementById('statusDot');
+            const text = document.getElementById('statusText');
+            const closeBtn = document.getElementById('internetNotifClose');
+
+            let isClosed = false;
+            let isOnline = navigator.onLine;
+
+            function updateStatus(online) {
+                if (isClosed) return;
+
+                isOnline = online;
+                if (online) {
+                    dot.className = 'status-dot online';
+                    text.className = 'status-text online';
+                    text.textContent = '✅ Ура! Интернет есть';
+                    notif.style.borderColor = 'var(--online)';
+                } else {
+                    dot.className = 'status-dot offline';
+                    text.className = 'status-text offline';
+                    text.textContent = '❌ Нет интернета';
+                    notif.style.borderColor = 'var(--offline)';
+                }
+                notif.classList.add('show');
+
+                // Автоматически скрываем через 5 секунд если есть интернет
+                if (online) {
+                    setTimeout(() => {
+                        if (!isClosed) {
+                            notif.classList.remove('show');
+                        }
+                    }, 5000);
+                }
+            }
+
+            // Первоначальная проверка
+            setTimeout(() => {
+                updateStatus(navigator.onLine);
+            }, 800);
+
+            // Слушаем изменения статуса
+            window.addEventListener('online', () => {
+                updateStatus(true);
+            });
+            window.addEventListener('offline', () => {
+                updateStatus(false);
+            });
+
+            // Закрытие по крестику
+            closeBtn.addEventListener('click', function() {
+                isClosed = true;
+                notif.classList.remove('show');
+            });
+
+            // Если закрыли, показываем снова через 30 секунд (на случай если статус изменится)
+            setInterval(() => {
+                if (isClosed) {
+                    const currentOnline = navigator.onLine;
+                    if (currentOnline !== isOnline) {
+                        isClosed = false;
+                        updateStatus(currentOnline);
+                    }
+                }
+            }, 30000);
+        })();
+    </script>
+
+    <!-- 6. УВЕДОМЛЕНИЕ "НЕДОСТУПНО" -->
     <script>
         (function() {
             const overlay = document.getElementById('notificationOverlay');
@@ -1650,7 +1947,7 @@
         })();
     </script>
 
-    <!-- 4. ГАЛЕРЕЯ: МОДАЛЬНОЕ ОКНО ДЛЯ ФОТО -->
+    <!-- 7. ГАЛЕРЕЯ: МОДАЛЬНОЕ ОКНО ДЛЯ ФОТО -->
     <script>
         (function() {
             const trigger = document.getElementById('galleryTrigger');
@@ -1690,7 +1987,7 @@
         })();
     </script>
 
-    <!-- 5. НАВИГАЦИЯ: СКРОЛЛ И МОБИЛЬНОЕ МЕНЮ -->
+    <!-- 8. НАВИГАЦИЯ: СКРОЛЛ И МОБИЛЬНОЕ МЕНЮ -->
     <script>
         (function() {
             const navbar = document.getElementById('navbar');
