@@ -9,7 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
-        /* ===== ПЕРЕМЕННЫЕ ===== */
+        /* ============================================
+                   ПЕРЕМЕННЫЕ
+                   ============================================ */
         :root {
             --bg: #0a0a0a;
             --surface: #141414;
@@ -21,6 +23,8 @@
             --glow-strong: rgba(255, 255, 255, 0.25);
             --white: #ffffff;
             --shadow: rgba(0, 0, 0, 0.6);
+            --vk: #4c75a3;
+            --yandex: #ffcc00;
         }
 
         html[data-theme="light"] {
@@ -36,7 +40,9 @@
             --shadow: rgba(0, 0, 0, 0.1);
         }
 
-        /* ===== БАЗА ===== */
+        /* ============================================
+                   БАЗА
+                   ============================================ */
         * {
             margin: 0;
             padding: 0;
@@ -69,7 +75,9 @@
             max-width: 100%;
         }
 
-        /* ===== СКРОЛЛБАР ===== */
+        /* ============================================
+                   СКРОЛЛБАР
+                   ============================================ */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -81,7 +89,9 @@
             border-radius: 10px;
         }
 
-        /* ===== ЧАСТИЦЫ (фон) ===== */
+        /* ============================================
+                   ЧАСТИЦЫ (ФОН)
+                   ============================================ */
         #particles-canvas {
             position: fixed;
             inset: 0;
@@ -89,7 +99,9 @@
             z-index: 0;
         }
 
-        /* ===== НАВИГАЦИЯ ===== */
+        /* ============================================
+                   НАВИГАЦИЯ
+                   ============================================ */
         .navbar {
             position: sticky;
             top: 0;
@@ -183,11 +195,12 @@
             letter-spacing: 0.1em;
         }
 
-        /* ===== МЕНЮ ===== */
+        /* ===== МЕНЮ (ОСНОВНОЕ) ===== */
         .nav-menu {
             display: none;
             list-style: none;
-            gap: 32px;
+            gap: 28px;
+            align-items: center;
         }
         @media (min-width: 768px) {
             .nav-menu {
@@ -196,13 +209,14 @@
         }
         .nav-link {
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.08em;
             padding: 4px 0;
             position: relative;
             transition: color 0.3s ease;
+            white-space: nowrap;
         }
         .nav-link:hover {
             color: var(--white);
@@ -230,6 +244,146 @@
             50% {
                 box-shadow: 0 0 60px var(--glow-strong);
             }
+        }
+
+        /* ============================================
+                   ВЫПАДАЮЩЕЕ МЕНЮ "МЫ В СОЦСЕТЯХ"
+                   ============================================ */
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-toggle {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 4px 0;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+        .dropdown-toggle:hover {
+            color: var(--white);
+        }
+        .dropdown-toggle .arrow {
+            font-size: 0.6rem;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .dropdown:hover .arrow {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 12px);
+            left: 50%;
+            transform: translateX(-50%) scale(0.8) translateY(10px);
+            background: var(--surface);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 8px 0;
+            min-width: 220px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 20px 60px var(--shadow);
+            list-style: none;
+        }
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) scale(1) translateY(0);
+        }
+
+        .dropdown-menu li {
+            padding: 0;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: menuItemAppear 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .dropdown-menu li:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+        .dropdown-menu li:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+        .dropdown-menu li:nth-child(3) {
+            animation-delay: 0.15s;
+        }
+        .dropdown-menu li:nth-child(4) {
+            animation-delay: 0.2s;
+        }
+
+        @keyframes menuItemAppear {
+            0% {
+                opacity: 0;
+                transform: translateX(-20px) scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        .dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 20px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            white-space: nowrap;
+            border-left: 3px solid transparent;
+        }
+        .dropdown-menu a:hover {
+            color: var(--white);
+            background: var(--glow);
+            transform: translateX(6px) scale(1.02);
+            border-left-color: var(--white);
+        }
+
+        /* Иконки соцсетей с цветами */
+        .dropdown-menu a .icon-vk {
+            color: var(--vk);
+            font-size: 1.2rem;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .dropdown-menu a:hover .icon-vk {
+            transform: rotate(-10deg) scale(1.2);
+        }
+
+        .dropdown-menu a .icon-yandex {
+            color: var(--yandex);
+            font-size: 1.2rem;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .dropdown-menu a:hover .icon-yandex {
+            transform: rotate(10deg) scale(1.2);
+        }
+
+        .dropdown-menu a .icon-telegram {
+            color: #26a5e4;
+            font-size: 1.2rem;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .dropdown-menu a:hover .icon-telegram {
+            transform: translateY(-4px) scale(1.2);
+        }
+
+        .dropdown-menu a .icon-spotify {
+            color: #1db954;
+            font-size: 1.2rem;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .dropdown-menu a:hover .icon-spotify {
+            transform: scale(1.3) rotate(-6deg);
         }
 
         /* ===== ТЕМА-ТОГГЛ ===== */
@@ -299,9 +453,11 @@
             text-transform: uppercase;
             letter-spacing: 0.08em;
             padding: 6px 0;
+            transition: all 0.3s ease;
         }
         .mobile-menu a:hover {
             color: var(--white);
+            transform: translateX(8px);
         }
         .mobile-menu a.active {
             color: var(--white);
@@ -905,6 +1061,14 @@
                 height: 40px;
                 font-size: 1.8rem;
             }
+            .dropdown-menu {
+                left: 0;
+                transform: translateX(0) scale(0.8) translateY(10px);
+                min-width: 200px;
+            }
+            .dropdown:hover .dropdown-menu {
+                transform: translateX(0) scale(1) translateY(0);
+            }
         }
         @media (max-width: 480px) {
             .hero-content h1 {
@@ -925,6 +1089,9 @@
             }
             .hero-image img {
                 padding: 6px;
+            }
+            .dropdown-menu {
+                min-width: 180px;
             }
         }
     </style>
@@ -948,6 +1115,37 @@
                 <li><a href="index.html" class="nav-link active">Главная</a></li>
                 <li><a href="about.html" class="nav-link">О группе</a></li>
                 <li><a href="releases.html" class="nav-link">Релизы</a></li>
+
+                <!-- ===== ВЫПАДАЮЩЕЕ МЕНЮ "МЫ В СОЦСЕТЯХ" ===== -->
+                <li class="dropdown">
+                    <span class="dropdown-toggle">
+                        📱 Мы в соцсетях
+                        <span class="arrow">▾</span>
+                    </span>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="https://vk.ru/artist/135757306087251221" target="_blank">
+                                <span class="icon-vk">🔵</span> VK
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://music.yandex.ru/artist/23051048" target="_blank">
+                                <span class="icon-yandex">🟡</span> Яндекс Музыка
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://t.me/VANDALMETAL" target="_blank">
+                                <span class="icon-telegram">💬</span> Telegram
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">
+                                <span class="icon-spotify">🟢</span> Spotify
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li><a href="contact.html" class="nav-link">Контакты</a></li>
             </ul>
             <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
@@ -964,6 +1162,9 @@
             <a href="index.html" class="active">Главная</a>
             <a href="about.html">О группе</a>
             <a href="releases.html">Релизы</a>
+            <a href="https://vk.ru/artist/135757306087251221" target="_blank">VK</a>
+            <a href="https://music.yandex.ru/artist/23051048" target="_blank">Яндекс Музыка</a>
+            <a href="https://t.me/VANDALMETAL" target="_blank">Telegram</a>
             <a href="contact.html">Контакты</a>
         </div>
     </div>
@@ -1223,14 +1424,12 @@
             trigger.addEventListener('click', openModal);
             closeBtn.addEventListener('click', closeModal);
 
-            // Закрытие по клику вне изображения
             overlay.addEventListener('click', function(e) {
                 if (e.target === overlay) {
                     closeModal();
                 }
             });
 
-            // Закрытие по Escape
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && overlay.classList.contains('open')) {
                     closeModal();
