@@ -217,6 +217,10 @@
             position: relative;
             transition: color 0.3s ease;
             white-space: nowrap;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: inherit;
         }
         .nav-link:hover {
             color: var(--white);
@@ -265,6 +269,9 @@
             padding: 4px 0;
             transition: color 0.3s ease;
             white-space: nowrap;
+            background: none;
+            border: none;
+            font-family: inherit;
         }
         .dropdown-toggle:hover {
             color: var(--white);
@@ -349,7 +356,6 @@
             border-left-color: var(--white);
         }
 
-        /* Иконки соцсетей с цветами */
         .dropdown-menu a .icon-vk {
             color: var(--vk);
             font-size: 1.2rem;
@@ -358,7 +364,6 @@
         .dropdown-menu a:hover .icon-vk {
             transform: rotate(-10deg) scale(1.2);
         }
-
         .dropdown-menu a .icon-yandex {
             color: var(--yandex);
             font-size: 1.2rem;
@@ -367,7 +372,6 @@
         .dropdown-menu a:hover .icon-yandex {
             transform: rotate(10deg) scale(1.2);
         }
-
         .dropdown-menu a .icon-telegram {
             color: #26a5e4;
             font-size: 1.2rem;
@@ -376,7 +380,6 @@
         .dropdown-menu a:hover .icon-telegram {
             transform: translateY(-4px) scale(1.2);
         }
-
         .dropdown-menu a .icon-spotify {
             color: #1db954;
             font-size: 1.2rem;
@@ -446,7 +449,8 @@
         .mobile-menu.open {
             display: flex;
         }
-        .mobile-menu a {
+        .mobile-menu a,
+        .mobile-menu .nav-link-mobile {
             color: var(--text-muted);
             font-size: 1rem;
             font-weight: 700;
@@ -454,18 +458,123 @@
             letter-spacing: 0.08em;
             padding: 6px 0;
             transition: all 0.3s ease;
+            cursor: pointer;
+            background: none;
+            border: none;
+            text-align: left;
+            font-family: inherit;
         }
-        .mobile-menu a:hover {
+        .mobile-menu a:hover,
+        .mobile-menu .nav-link-mobile:hover {
             color: var(--white);
             transform: translateX(8px);
         }
-        .mobile-menu a.active {
+        .mobile-menu a.active,
+        .mobile-menu .nav-link-mobile.active {
             color: var(--white);
         }
         @media (min-width: 768px) {
             .mobile-menu {
                 display: none !important;
             }
+        }
+
+        /* ============================================
+                   МОДАЛЬНОЕ УВЕДОМЛЕНИЕ
+                   ============================================ */
+        .notification-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            padding: 24px;
+        }
+        .notification-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .notification-box {
+            background: var(--surface);
+            border: 2px solid var(--white);
+            border-radius: 24px;
+            padding: 48px 56px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 80px var(--glow-strong);
+            transform: scale(0.7) rotate(-8deg);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+        .notification-overlay.open .notification-box {
+            transform: scale(1) rotate(0deg);
+            opacity: 1;
+        }
+
+        .notification-box .notif-icon {
+            font-size: 3.5rem;
+            display: block;
+            margin-bottom: 12px;
+            animation: notifIconPulse 1.5s ease-in-out infinite;
+        }
+        @keyframes notifIconPulse {
+            0%,
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+            50% {
+                transform: scale(1.2) rotate(-6deg);
+            }
+        }
+
+        .notification-box .notif-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--white);
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+        .notification-box .notif-title .highlight {
+            background: linear-gradient(135deg, var(--white), var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .notification-box .notif-sub {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        .notification-box .notif-close {
+            background: var(--white);
+            color: var(--bg);
+            border: none;
+            padding: 12px 36px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 0 40px var(--glow);
+        }
+        .notification-box .notif-close:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 80px var(--glow-strong);
+            opacity: 0.85;
         }
 
         /* ============================================
@@ -650,7 +759,7 @@
             transform: scale(1.04);
         }
 
-        /* ===== МОДАЛЬНОЕ ОКНО ===== */
+        /* ===== МОДАЛЬНОЕ ОКНО ДЛЯ ФОТО ===== */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -903,7 +1012,7 @@
         }
 
         /* ============================================
-                   КОНТАКТЫ
+                   КОНТАКТЫ (секция)
                    ============================================ */
         .contact-section {
             padding: 80px 0;
@@ -1069,6 +1178,12 @@
             .dropdown:hover .dropdown-menu {
                 transform: translateX(0) scale(1) translateY(0);
             }
+            .notification-box {
+                padding: 32px 24px;
+            }
+            .notification-box .notif-title {
+                font-size: 1.8rem;
+            }
         }
         @media (max-width: 480px) {
             .hero-content h1 {
@@ -1092,6 +1207,15 @@
             }
             .dropdown-menu {
                 min-width: 180px;
+            }
+            .notification-box {
+                padding: 24px 16px;
+            }
+            .notification-box .notif-title {
+                font-size: 1.5rem;
+            }
+            .notification-box .notif-sub {
+                font-size: 0.95rem;
             }
         }
     </style>
@@ -1146,7 +1270,10 @@
                     </ul>
                 </li>
 
-                <li><a href="contact.html" class="nav-link">Контакты</a></li>
+                <!-- ===== КОНТАКТЫ (триггер уведомления) ===== -->
+                <li>
+                    <button class="nav-link" id="contactsTrigger">Контакты</button>
+                </li>
             </ul>
             <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
                 <span id="themeIcon">🌙</span>
@@ -1165,7 +1292,21 @@
             <a href="https://vk.ru/artist/135757306087251221" target="_blank">VK</a>
             <a href="https://music.yandex.ru/artist/23051048" target="_blank">Яндекс Музыка</a>
             <a href="https://t.me/VANDALMETAL" target="_blank">Telegram</a>
-            <a href="contact.html">Контакты</a>
+            <button class="nav-link-mobile" id="mobileContactsTrigger">Контакты</button>
+        </div>
+    </div>
+
+    <!-- ===== УВЕДОМЛЕНИЕ "НЕДОСТУПНО" ===== -->
+    <div class="notification-overlay" id="notificationOverlay">
+        <div class="notification-box">
+            <span class="notif-icon">🚫</span>
+            <h2 class="notif-title">
+                <span class="highlight">НЕДОСТУПНО</span>
+            </h2>
+            <p class="notif-sub">
+                Все контакты находятся в меню «Мы в соцсетях» и в футере сайта.
+            </p>
+            <button class="notif-close" id="notificationClose">Понятно</button>
         </div>
     </div>
 
@@ -1196,7 +1337,7 @@
         </div>
     </section>
 
-    <!-- ===== МОДАЛЬНОЕ ОКНО ===== -->
+    <!-- ===== МОДАЛЬНОЕ ОКНО ДЛЯ ФОТО ===== -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-content">
             <button class="modal-close" id="modalClose">✕</button>
@@ -1232,7 +1373,7 @@
         </div>
     </section>
 
-    <!-- ===== КОНТАКТЫ ===== -->
+    <!-- ===== КОНТАКТЫ (секция) ===== -->
     <section class="contact-section" id="contact">
         <div class="container">
             <div style="text-align: center; margin-bottom: 20px;">
@@ -1277,7 +1418,7 @@
                         <li><a href="index.html">Главная</a></li>
                         <li><a href="about.html">О группе</a></li>
                         <li><a href="releases.html">Релизы</a></li>
-                        <li><a href="contact.html">Контакты</a></li>
+                        <li><button class="nav-link" id="footerContactsTrigger" style="background:none;border:none;color:var(--text-muted);font-size:0.9rem;cursor:pointer;font-family:inherit;padding:0;">Контакты</button></li>
                     </ul>
                 </div>
                 <div>
@@ -1404,7 +1545,53 @@
         })();
     </script>
 
-    <!-- 3. ГАЛЕРЕЯ: МОДАЛЬНОЕ ОКНО -->
+    <!-- 3. УВЕДОМЛЕНИЕ "НЕДОСТУПНО" -->
+    <script>
+        (function() {
+            const overlay = document.getElementById('notificationOverlay');
+            const closeBtn = document.getElementById('notificationClose');
+
+            // Триггеры для открытия
+            const triggers = [
+                document.getElementById('contactsTrigger'),
+                document.getElementById('mobileContactsTrigger'),
+                document.getElementById('footerContactsTrigger')
+            ];
+
+            function openNotification(e) {
+                e.preventDefault();
+                overlay.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeNotification() {
+                overlay.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+
+            triggers.forEach(trigger => {
+                if (trigger) {
+                    trigger.addEventListener('click', openNotification);
+                }
+            });
+
+            closeBtn.addEventListener('click', closeNotification);
+
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    closeNotification();
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && overlay.classList.contains('open')) {
+                    closeNotification();
+                }
+            });
+        })();
+    </script>
+
+    <!-- 4. ГАЛЕРЕЯ: МОДАЛЬНОЕ ОКНО ДЛЯ ФОТО -->
     <script>
         (function() {
             const trigger = document.getElementById('galleryTrigger');
@@ -1421,24 +1608,30 @@
                 document.body.style.overflow = '';
             }
 
-            trigger.addEventListener('click', openModal);
-            closeBtn.addEventListener('click', closeModal);
+            if (trigger) {
+                trigger.addEventListener('click', openModal);
+            }
+            if (closeBtn) {
+                closeBtn.addEventListener('click', closeModal);
+            }
 
-            overlay.addEventListener('click', function(e) {
-                if (e.target === overlay) {
-                    closeModal();
-                }
-            });
+            if (overlay) {
+                overlay.addEventListener('click', function(e) {
+                    if (e.target === overlay) {
+                        closeModal();
+                    }
+                });
+            }
 
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && overlay.classList.contains('open')) {
+                if (e.key === 'Escape' && overlay && overlay.classList.contains('open')) {
                     closeModal();
                 }
             });
         })();
     </script>
 
-    <!-- 4. НАВИГАЦИЯ: СКРОЛЛ И МОБИЛЬНОЕ МЕНЮ -->
+    <!-- 5. НАВИГАЦИЯ: СКРОЛЛ И МОБИЛЬНОЕ МЕНЮ -->
     <script>
         (function() {
             const navbar = document.getElementById('navbar');
@@ -1453,15 +1646,19 @@
                 }
             });
 
-            mobileToggle.addEventListener('click', () => {
-                mobileMenu.classList.toggle('open');
-            });
-
-            document.querySelectorAll('.mobile-menu a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.remove('open');
+            if (mobileToggle) {
+                mobileToggle.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('open');
                 });
-            });
+            }
+
+            if (mobileMenu) {
+                document.querySelectorAll('.mobile-menu a, .mobile-menu .nav-link-mobile').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.remove('open');
+                    });
+                });
+            }
         })();
     </script>
 
